@@ -18,7 +18,7 @@ Eager to collaborate with forward-thinking companies to invent the future of tec
 
 ## Technical Skills
 💪  **Large Language Models**: Heavily utilizing LLM based tools for development and everyday routines (GPT/Claude/llama/DeepSeek/...). 
-Developing own framework in background (a.k.a. pet project), to get most from LLMs (publicly available OR self-hosted).  
+Developing own tool in background (a.k.a. pet project), to get most from LLMs (publicly available OR self-hosted).  
 💪 **DevOps and Administration**: `Linux`, `Docker`, `Docker Swarm`, `Kubernetes`, `Terraform`, `AWS`, `Digital Ocean`, `GoDaddy`, `Yandex Cloud`, `Ansible`, `Gitlab/Github`, `Postgres`, `Redis`.    
 💪 **Programming Languages**: `Python` (real-time apps development \+ data analysis), `Scala`, `Java`, `C`, `shell`.  
 💪 **Specialized Environments**: `JetBrains`, `VS Code`, `Eclipse`, `Jupyter Notebook`, `Anylogic`, `Informatica`, `MS Office`, `Google Workspace`.  
