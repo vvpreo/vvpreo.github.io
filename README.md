@@ -1,8 +1,8 @@
 # Vladimir Preobrazhenskiy
 
-|           | **Contacts**                                                                                                |
-|-----------|-------------------------------------------------------------------------------------------------------------|
-| <img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="400">     | Email: [vvpreo@gmail.com](mailto:vvpreo@gmail.com)<br/>Telegram: [https://t.me/vvpreo](https://t.me/vvpreo) |
+| **Was born in 1988**                                            | **Contacts**                                                                                                |
+|-----------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| <img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="400"> | Email: [vvpreo@gmail.com](mailto:vvpreo@gmail.com)<br/>Telegram: [https://t.me/vvpreo](https://t.me/vvpreo) |
 
 ## Professional Summary
 
@@ -187,7 +187,6 @@ Despite basic humanitarian education, by the end of university studies, curiosit
 - Married, have children.  
 - Hobbies: travel, hiking.  
 - Currently residing in Thailand (Phuket) (UTC \+7)
-- Born in 1988
 - Languages: english & russian
 
 ## 🌐 Public info
