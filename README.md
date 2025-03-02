@@ -1,35 +1,7 @@
 # Vladimir Preobrazhenskiy
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avatar in Oval</title>
-    <style>
-        body {
-            margin: 0; /* Убираем стандартные отступы браузера */
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            min-height: 100vh; /* Минимальная высота для центрирования */
-            background-color: #f9f9f9; /* Небольшой фон для контраста */
-        }
-        .avatar {
-            max-width: 50%; /* Изображение не выйдет за пределы контейнера */
-            max-height: 400px; /* Установлено максимальное значение высоты */
-            width: auto; /* Ширина аватарки */
-            height: auto; /* Высота аватарки */
-            border-radius: 50% / 25%; /* Скругление до овала */
-            object-fit: cover; /* Обеспечивает корректное отображение картинки */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень */
-        }
-    </style>
-</head>
-<body>
-    <img src="./avatar.jpg" alt="Avatar" class="avatar">
-</body>
-</html>
+![Vladimir Preobrazhenskiy](avatar.jpg) Born in 1988
+
 
 My professional portrait
 
