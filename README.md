@@ -1,11 +1,6 @@
 # Vladimir Preobrazhenskiy
 
 <img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="400">
-<div style="display: inline-block; text-align: center; border: 2px solid black; padding: 10px; border-radius: 8px; max-width: 200px;">
-    <img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" style="width: 100%; border-radius: 8px;">
-    <p style="margin: 5px 0 0; font-size: 14px;">Born in 1988</p>
-</div>
-
 
 My professional portrait
 
@@ -181,27 +176,18 @@ Despite basic humanitarian education, by the end of university studies, curiosit
 - Married, have children.  
 - Hobbies: travel, hiking.  
 - Currently residing in Thailand (Phuket) (UTC \+7)
-
-
+- Born in 1988
+- 
 
 ## Contacts
 
-<table>
-  <tr>
-    <td>
-      Email: <a href="mailto:vvpreo@gmail.com">vvpreo@gmail.com</a><br>
-      Tel. (Russia): <a href="tel:+79263803656">+7(926)380-36-56</a><br>
-      Tel. (Thailand): <a href="tel:+66823893092">+66(82)389-30-92</a><br>
-      Telegram: <a href="https://t.me/vvpreo">https://t.me/vvpreo</a><br>
-      Whatsapp: <a href="https://wa.me/+79263803656">https://wa.me/+79263803656</a><br>
-      LinkedIn: <a href="https://www.linkedin.com/in/vvpreo/">https://www.linkedin.com/in/vvpreo/</a><br>
-      Facebook: <a href="https://www.facebook.com/vvpreo">https://www.facebook.com/vvpreo</a><br>
-      Github: <a href="https://github.com/vvpreo">https://github.com/vvpreo</a>
-    </td>
-    <td rowspan="8" style="text-align: center; vertical-align: middle;">
-      <img src="./avatar.jpg" alt="Avatar" style="max-width: 150px; border-radius: 50%;">
-      <br>
-      Born in 1988
-    </td>
-  </tr>
-</table>
+| **Channel**       | **Address/Link**                                                           |
+|--------------------|----------------------------------------------------------------------------|
+| Email             | [vvpreo@gmail.com](mailto:vvpreo@gmail.com)                                |
+| Tel. (Russia)     | [\+7(926)380-36-56](tel:+7\(926\)380-36-56)                                |
+| Tel. (Thailand)   | [\+66(82)389-30-92](tel:+66\(82\)389-30-92)                                |
+| Telegram          | [https://t.me/vvpreo](https://t.me/vvpreo)                                 |
+| Whatsapp          | [https://wa.me/+79263803656](https://wa.me/+79263803656)                   |
+| LinkedIn          | [https://www.linkedin.com/in/vvpreo/](https://www.linkedin.com/in/vvpreo/) |
+| Facebook          | [https://www.facebook.com/vvpreo](https://www.facebook.com/vvpreo)         |
+| Github            | [https://github.com/vvpreo](https://github.com/vvpreo)                     |
