@@ -8,7 +8,7 @@
 
 Seasoned IT specialist with over a decade of experience in developing and managing innovative products.
 Passionate about leveraging AI to create impactful solutions that drive business value and client's satisfaction.
-Expert in Architecture, DevOps practices, and cloud infrastructures, with a strong background in programming and data analysis.
+Expert in conversational AI driven systems, Architecture, DevOps practices, and cloud infrastructures, with a strong background in programming and data analysis.
 Proven leader with the ability to join or manage cross-functional agile teams to deliver solutions that exceed expectations.
 Eager to collaborate with forward-thinking companies to invent the future of technology and the way we live.
 
@@ -36,7 +36,7 @@ Developing own framework in background (a.k.a. pet project), to get most from LL
 
 **About the organization**:
 
-- Own POC, to understand the shape of a possible product: AI based story generation.
+- POC activity, to understand the shape of a possible product: AI based story generation.
 
 **Period**: 02.2024 - present  
 **Roles**: Co-author of the idea, Product Manager, combined with technical roles  
@@ -197,3 +197,6 @@ Despite basic humanitarian education, by the end of university studies, curiosit
 | LinkedIn          | [https://www.linkedin.com/in/vvpreo/](https://www.linkedin.com/in/vvpreo/) |
 | Facebook          | [https://www.facebook.com/vvpreo](https://www.facebook.com/vvpreo)         |
 | Github            | [https://github.com/vvpreo](https://github.com/vvpreo)                     |
+
+
+As of february 2025
