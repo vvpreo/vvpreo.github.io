@@ -1,6 +1,7 @@
 # Vladimir Preobrazhenskiy
 
 ![Vladimir Preobrazhenskiy](avatar.jpg) Born in 1988
+<img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="200">
 
 
 My professional portrait
@@ -58,7 +59,7 @@ My professional portrait
 
 ## Realtalk (Insitech Development, Realtalk)
 
-**About the organization**: [https://www.realtalk.ru](https://www.realtalk.ru/), [https://www.rusprofile.ru/id/1227700235377](https://www.rusprofile.ru/id/1227700235377)
+**About the organization**:
 
 - The company was established to develop a product—a software complex that allows conducting goal-oriented voice dialogues with people across a wide range of scenarios.
 
