@@ -17,22 +17,22 @@ Eager to collaborate with forward-thinking companies to invent the future of tec
 
 
 ## Technical Skills
-❇️ **Large Language Models**: Heavily utilizing LLM based tools for development and everyday routines (GPT/Claudie/llama/DeepSeek/...). 
+💪  **Large Language Models**: Heavily utilizing LLM based tools for development and everyday routines (GPT/Claudie/llama/DeepSeek/...). 
 Developing own framework in background (a.k.a. pet project), to get most from LLMs (publicly available OR self-hosted).  
-✅ **DevOps and Administration**: `Linux`, `Docker`, `Docker Swarm`, `Kubernetes`, `Terraform`, `AWS`, `Digital Ocean`, `GoDaddy`, `Yandex Cloud`, `Ansible`, `Gitlab/Github`, `Postgres`, `Redis`.    
-✅ **Programming Languages**: `Python` (real-time apps development \+ data analysis), `Scala`, `Java`, `C`, `shell`.  
-✅ **Specialized Environments**: `JetBrains`, `VS Code`, `Eclipse`, `Jupyter Notebook`, `Anylogic`, `Informatica`, `MS Office`, `Google Workspace`.  
-✅ **Major Frameworks/Protocols**: `Hadoop`, `SPARK`, `SIP`.    
+💪 **DevOps and Administration**: `Linux`, `Docker`, `Docker Swarm`, `Kubernetes`, `Terraform`, `AWS`, `Digital Ocean`, `GoDaddy`, `Yandex Cloud`, `Ansible`, `Gitlab/Github`, `Postgres`, `Redis`.    
+💪 **Programming Languages**: `Python` (real-time apps development \+ data analysis), `Scala`, `Java`, `C`, `shell`.  
+💪 **Specialized Environments**: `JetBrains`, `VS Code`, `Eclipse`, `Jupyter Notebook`, `Anylogic`, `Informatica`, `MS Office`, `Google Workspace`.  
+💪 **Major Frameworks/Protocols**: `Hadoop`, `SPARK`, `SIP`.    
 
 ## Soft Skills
 
-✅ **Management**: Project/Product management, management of teams up to 10 people.  
-✅ **Analytical**: Business analysis, system analysis, data analysis, architect.  
-✅ **Others**: Agile. Willingness and ability to take responsibility for the final result.
+💪 **Management**: Project/Product management, management of teams up to 10 people.  
+💪 **Analytical**: Business analysis, system analysis, data analysis, architect.  
+💪 **Others**: Agile. Willingness and ability to take responsibility for the final result.
 
-# Work Experience
+# 🏁 Work Experience
 
-## 🏁 Storyjar research project
+## ✅ Storyjar research project
 
 **About the organization**:
 
@@ -50,7 +50,7 @@ Developing own framework in background (a.k.a. pet project), to get most from LL
 - Preparation of cloud architecture on AWS \+ Terraform, setting up DevOps pipelines.  
 - Implementation of face detection and matching service based on open-source solutions. F-score ~97%.  
 
-## 🏁 QRIT (freelance)
+## ✅ QRIT (freelance)
 
 **About the organization**: [https://landing.qrit.dev/](https://landing.qrit.dev/)   
 **Period**: 07.2023 - 02.2024  
@@ -64,7 +64,7 @@ Developing own framework in background (a.k.a. pet project), to get most from LL
 - Conducting system and business analysis for integration with participants of the European fintech market  
 - Supporting the product's working environments
 
-## 🏁 Realtalk (Insitech Development, Realtalk)
+## ✅ Realtalk (Insitech Development, Realtalk)
 
 **About the organization**:
 
@@ -85,7 +85,7 @@ Developing own framework in background (a.k.a. pet project), to get most from LL
 - The developed solution was included in the registry of Russian software:  
   [https://reestr.digital.gov.ru/reestr/870268/?sphrase\_id=5454194](https://reestr.digital.gov.ru/reestr/870268/?sphrase_id=5454194)
 
-## 🏁 X5 Retail Group
+## ✅ X5 Retail Group
 
 **About the organization:** [https://www.x5.ru/](https://www.x5.ru/)   
 **Period**: 11.2017 - 04.2021  
@@ -99,7 +99,7 @@ Developing own framework in background (a.k.a. pet project), to get most from LL
 - Developed and implemented a customer support bot in the WhatsApp channel.  
 - Expanding the team, ensured the implementation of an outbound call system for collecting NPS \+ CSI. The system included services responsible for coordinating outbound traffic in accordance with the organization's contact policies. Achieved industrial capacities of several hundred thousand calls per day.
 
-## 🏁 Beeline
+## ✅ Beeline
 
 **About the organization**: [https://moskva.beeline.ru/](https://moskva.beeline.ru/)   
 **Period**: 09.2015 - 04.2017  
@@ -123,7 +123,7 @@ In addition to the main projects:
 - Was the first in the company to ensure the successful implementation of commercial tasks on SPARK, which achieved a reduction in Time to Market and implementation costs.  
 - Participated in a pilot project on online data quality analysis.
 
-## 🏁 Accenture
+## ✅ Accenture
 
 **About the organization**: [https://www.accenture.com/](https://www.accenture.com/)   
 **Period**: 03.2012 - 08.2015  
@@ -136,7 +136,7 @@ In addition to the main projects:
 - Developed a simulation model of the warehouse of the largest (at that time) Russian online retailer. The project team faced the task of estimating the maximum warehouse throughput. The developed model allowed testing a set of hypotheses and giving a weighted estimate of the warehouse's throughput capacity. Performed detailed spatial modeling down to an individual employee working in the warehouse. Model development was carried out using Anylogic \+ Java.  
 - As a system analyst, participated in a project to prepare a data mart for the risk department in the largest bank of the Russian Federation. Engaged in requirements analysis, writing specifications, compiling ETL procedures using SQL and Informatica. Worked with Teradata databases.
 
-## 🏁 Luxoft
+## ✅ Luxoft
 
 **About the organization**: [https://www.luxoft.com/](https://www.luxoft.com/)  
 **Period**: 11.2009 - 02.2012  
