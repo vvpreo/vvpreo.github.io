@@ -9,7 +9,7 @@
 Seasoned IT specialist with over a decade of experience in developing and managing innovative products.
 Passionate about leveraging AI to create impactful solutions that drive business value and client's satisfaction.
 Expert in conversational AI driven systems, Architecture, DevOps practices, and cloud infrastructures, with a strong background in programming and data analysis.
-Proven leader with the ability to join or manage cross-functional agile teams to deliver 🔝solutions and products.
+Proven leader with the ability to join or manage cross-functional agile teams to deliver top solutions and products.
 Eager to collaborate with forward-thinking companies to invent the future of technology and the way we live.
 
 [Alan Kay](https://en.wikipedia.org/wiki/Alan_Kay): 
