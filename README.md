@@ -1,30 +1,42 @@
 # Vladimir Preobrazhenskiy
 
-<img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="400">
+|           | **Contacts**                                                                                                |
+|-----------|-------------------------------------------------------------------------------------------------------------|
+| <img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="400">     | Email: [vvpreo@gmail.com](mailto:vvpreo@gmail.com)<br/>Telegram: [https://t.me/vvpreo](https://t.me/vvpreo) |
 
-My professional portrait
+## Professional Summary
+
+Seasoned IT specialist with over a decade of experience in developing and managing innovative products.
+Passionate about leveraging AI to create impactful solutions that drive business value and client's satisfaction.
+Expert in Architecture, DevOps practices, and cloud infrastructures, with a strong background in programming and data analysis.
+Proven leader with the ability to join or manage cross-functional agile teams to deliver solutions that exceed expectations.
+Eager to collaborate with forward-thinking companies to invent the future of technology and the way we live.
+
+[Alan Kay](https://en.wikipedia.org/wiki/Alan_Kay): 
+"The best way to predict the future is to invent it."
 
 
 ## Technical Skills
-
-**DevOps and Administration**: Linux, Docker, Docker Swarm, Kubernetes, Terraform, AWS, Digital Ocean, GoDaddy, Yandex Cloud, Ansible, Gitlab/Github, Postgres, Redis.  
-**Programming Languages**: Python (real-time apps development \+ data analysis), Scala, Java, C, shell.  
-**Specialized Environments**: JetBrains, VS Code, Eclipse, Jupyter Notebook, Anylogic, Informatica, MS Office, Google Workspace.  
-**Major Frameworks/Protocols**: Hadoop, SPARK, SIP.
+❇️ **Large Language Models**: Heavily utilizing LLM based tools for development and everyday routines (GPT/Claudie/llama/DeepSeek/...). 
+Developing own framework in background (a.k.a. pet project), to get most from LLMs (publicly available OR self-hosted).  
+✅ **DevOps and Administration**: `Linux`, `Docker`, `Docker Swarm`, `Kubernetes`, `Terraform`, `AWS`, `Digital Ocean`, `GoDaddy`, `Yandex Cloud`, `Ansible`, `Gitlab/Github`, `Postgres`, `Redis`.    
+✅ **Programming Languages**: `Python` (real-time apps development \+ data analysis), `Scala`, `Java`, `C`, `shell`.  
+✅ **Specialized Environments**: `JetBrains`, `VS Code`, `Eclipse`, `Jupyter Notebook`, `Anylogic`, `Informatica`, `MS Office`, `Google Workspace`.  
+✅ **Major Frameworks/Protocols**: `Hadoop`, `SPARK`, `SIP`.    
 
 ## Soft Skills
 
-**Management**: Project/Product management, management of small teams (up to 10 people).  
-**Analytical**: Business analysis, system analysis, data analysis, architect.  
-**Others**: Agile. Willingness and ability to take responsibility for the final result. Proactivity. Communicative skills. Native Russian. English Upper Intermediate-Advanced.
+✅ **Management**: Project/Product management, management of teams up to 10 people.  
+✅ **Analytical**: Business analysis, system analysis, data analysis, architect.  
+✅ **Others**: Agile. Willingness and ability to take responsibility for the final result.
 
 # Work Experience
 
-## Family Memory Archive (family project, potential startup)
+## Storyjar research project
 
 **About the organization**:
 
-- A concept being implemented according to one of the scenarios: family archive/startup
+- Own POC, to understand the shape of a possible product: AI based story generation.
 
 **Period**: 02.2024 - present  
 **Roles**: Co-author of the idea, Product Manager, combined with technical roles  
@@ -35,11 +47,8 @@ My professional portrait
 - Administration and budget control of the product.  
 - Development of business, system, and software architecture of the product, preparation of technical specifications.  
 - Search and attraction of developers and other team members for product implementation  
-- Implementation of a vector storage for associative search based on user data  
 - Preparation of cloud architecture on AWS \+ Terraform, setting up DevOps pipelines.  
 - Implementation of face detection and matching service based on open-source solutions. F-score ~97%.  
-- In progress:  
-  - Development of a solution for automatic generation of stories based on user data and instructions.
 
 ## QRIT (freelance)
 
@@ -49,9 +58,9 @@ My professional portrait
 **Roles**: Architect, DevOps, Analyst  
 **Responsibilities and achievements**:
 
-- Assisting the team in developing the solution architecture (in terms of the data model \+ component architecture)  
+- Assisting the team in developing the solution architecture (in terms of the data model + component architecture)  
 - Building DevOps pipelines based on GitHub Actions  
-- Configuring and managing cloud infrastructure using Terraform \+ Digital Ocean  
+- Configuring and managing cloud infrastructure using Terraform + Digital Ocean  
 - Conducting system and business analysis for integration with participants of the European fintech market  
 - Supporting the product's working environments
 
@@ -138,56 +147,53 @@ In addition to the main projects:
 - Being in a team of specialists in software development for boards and microcontrollers, gained extensive practical experience working in C and Java. Main responsibilities included writing tests, code review, development of new additions. Through efforts, created a simulator of the ZigBee protocol stack operation, which allowed many tests to be run on a computer without using debug boards, significantly accelerating testing.  
 - Later retrained as a Java developer and joined the team responsible for preparing the SDK for working with boards and devices. Responsibilities also included writing tests, application code, regular scrum meetings, and bug fixes.
 
-# Education
+## Education
 
-## Basic
+### Basic
 
 Graduated from the Higher School of Economics in 2010 with a bachelor's degree. Department of Sociology, specialization "Analysis of Social Institutions". Defended a graduation thesis on the topic "Constructing the Mechanism of Trust towards Machines as Subjects of Social Relations".
 
 Despite basic humanitarian education, by the end of university studies, curiosity about the world of robots and AI developed into a strong desire to work in this/related fields. Completed retraining courses at Bauman Moscow State Technical University (C, C++, Java). Currently, in IT for more than 10 years. Acquire necessary professional knowledge/skills through courses/articles/self-study. The ability to learn turns out to be more important than many others.
 
-## Certificates and Courses
+### Certificates and Courses
 
-- 2025-01. Kubernetes for the Absolute Beginners - Hands-on. [https://www.udemy.com/certificate/UC-a548d342-bd1e-49db-ba3a-e98952f85649/](https://www.udemy.com/certificate/UC-a548d342-bd1e-49db-ba3a-e98952f85649/)  
-- 2024.10. Kubernetes - Complete Course on Kubernetes.  
-  [https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/](https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/)   
-- 2019.02. UX Design by Example. [https://www.udemy.com/certificate/UC-2QR0IJ94/](https://www.udemy.com/certificate/UC-2QR0IJ94/)   
-- 2018. Training at Skolkovo.  
-- 2016. Beeline Data School. [http://bigdata.beeline.digital](http://bigdata.beeline.digital).  
-- 2016. Introduction to Data Science. [https://ru.coursera.org/learn/machine-learning](https://ru.coursera.org/learn/machine-learning). Completed the course.  
-- 2015. The Data Scientist’s Toolbox by Johns Hopkins University on Coursera. Certificate earned on May 4, 2015. [https://www.coursera.org/account/accomplishments/certificate/MVLTKA6TLB](https://www.coursera.org/account/accomplishments/certificate/MVLTKA6TLB)  
-- 2015. R Programming by Johns Hopkins University on Coursera. Certificate earned on June 1, 2015. [https://www.coursera.org/account/accomplishments/certificate/8N7TRQQTXV](https://www.coursera.org/account/accomplishments/certificate/8N7TRQQTXV)  
-- 2015. Getting and Cleaning Data by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/2PP4ZFF3US](https://www.coursera.org/account/accomplishments/certificate/2PP4ZFF3US)  
-- 2015. Statistical Inference by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/2EQ5GEKJGS](https://www.coursera.org/account/accomplishments/certificate/2EQ5GEKJGS)  
-- 2015. Reproducible Research by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/D6ZT8MKCMU](https://www.coursera.org/account/accomplishments/certificate/D6ZT8MKCMU)  
-- 2015. Exploratory Data Analysis by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/S8KMV2N98K](https://www.coursera.org/account/accomplishments/certificate/S8KMV2N98K)  
-- 2013. Introduction to Data Science: Building Recommender Systems. Cloudera.  
-- 2013. Cloudera Certified Specialist in Apache Hbase. Cloudera.  
-- 2012. Cloudera Certified Developer For Apache Hadoop. Cloudera  
-- 2012. Cloudera Certified Administrator for Apache Hadoop. Cloudera  
-- 2012. PMI® PMBoK based Project Management. "Specialist" at Bauman Moscow State Technical University.  
-- 2010. Java, Java EE. "Specialist" at Bauman Moscow State Technical University.  
-- 2009. Fundamentals of Programming and Databases. "Specialist" at Bauman Moscow State Technical University.  
-- 2009. Visual C/C++. "Specialist" at Bauman Moscow State Technical University.
+#### In progress
+- CKAD (Certified Kubernetes Application Developer)
 
-# Additionally
+#### Obtained
+- In 2024.10. Kubernetes - Complete Course on Kubernetes. [https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/](https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/)   
+- In 2019.02. UX Design by Example. [https://www.udemy.com/certificate/UC-2QR0IJ94/](https://www.udemy.com/certificate/UC-2QR0IJ94/)   
+- In 2018 Training at Skolkovo.  
+- In 2016. Beeline Data School. [http://bigdata.beeline.digital](http://bigdata.beeline.digital).  
+- In 2016. Introduction to Data Science. [https://ru.coursera.org/learn/machine-learning](https://ru.coursera.org/learn/machine-learning). Completed the course.  
+- In 2015. The Data Scientist’s Toolbox by Johns Hopkins University on Coursera. Certificate earned on May 4, 2015. [https://www.coursera.org/account/accomplishments/certificate/MVLTKA6TLB](https://www.coursera.org/account/accomplishments/certificate/MVLTKA6TLB)  
+- In 2015. R Programming by Johns Hopkins University on Coursera. Certificate earned on June 1, 2015. [https://www.coursera.org/account/accomplishments/certificate/8N7TRQQTXV](https://www.coursera.org/account/accomplishments/certificate/8N7TRQQTXV)  
+- In 2015. Getting and Cleaning Data by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/2PP4ZFF3US](https://www.coursera.org/account/accomplishments/certificate/2PP4ZFF3US)  
+- In 2015. Statistical Inference by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/2EQ5GEKJGS](https://www.coursera.org/account/accomplishments/certificate/2EQ5GEKJGS)  
+- In 2015. Reproducible Research by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/D6ZT8MKCMU](https://www.coursera.org/account/accomplishments/certificate/D6ZT8MKCMU)  
+- In 2015. Exploratory Data Analysis by Johns Hopkins University on Coursera. Certificate earned on June 29, 2015. [https://www.coursera.org/account/accomplishments/certificate/S8KMV2N98K](https://www.coursera.org/account/accomplishments/certificate/S8KMV2N98K)  
+- In 2013. Introduction to Data Science: Building Recommender Systems. Cloudera.  
+- In 2013. Cloudera Certified Specialist in Apache Hbase. Cloudera.  
+- In 2012. Cloudera Certified Developer For Apache Hadoop. Cloudera  
+- In 2012. Cloudera Certified Administrator for Apache Hadoop. Cloudera  
+- In 2012. PMI® PMBoK based Project Management. "Specialist" at Bauman Moscow State Technical University.  
+- In 2010. Java, Java EE. "Specialist" at Bauman Moscow State Technical University.  
+- In 2009. Fundamentals of Programming and Databases. "Specialist" at Bauman Moscow State Technical University.  
+- In 2009. Visual C/C++. "Specialist" at Bauman Moscow State Technical University.
+
+## Additionally
 
 - References from previous workplaces can be provided upon additional request.  
 - Married, have children.  
 - Hobbies: travel, hiking.  
 - Currently residing in Thailand (Phuket) (UTC \+7)
 - Born in 1988
-- 
+- Languages: english & russian
 
-## Contacts
+## Public info
 
 | **Channel**       | **Address/Link**                                                           |
 |--------------------|----------------------------------------------------------------------------|
-| Email             | [vvpreo@gmail.com](mailto:vvpreo@gmail.com)                                |
-| Tel. (Russia)     | [\+7(926)380-36-56](tel:+7\(926\)380-36-56)                                |
-| Tel. (Thailand)   | [\+66(82)389-30-92](tel:+66\(82\)389-30-92)                                |
-| Telegram          | [https://t.me/vvpreo](https://t.me/vvpreo)                                 |
-| Whatsapp          | [https://wa.me/+79263803656](https://wa.me/+79263803656)                   |
 | LinkedIn          | [https://www.linkedin.com/in/vvpreo/](https://www.linkedin.com/in/vvpreo/) |
 | Facebook          | [https://www.facebook.com/vvpreo](https://www.facebook.com/vvpreo)         |
 | Github            | [https://github.com/vvpreo](https://github.com/vvpreo)                     |
