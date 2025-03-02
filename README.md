@@ -1,7 +1,10 @@
 # Vladimir Preobrazhenskiy
 
-![Vladimir Preobrazhenskiy](avatar.jpg) Born in 1988
-<img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="200">
+<img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" width="400">
+<div style="display: inline-block; text-align: center; border: 2px solid black; padding: 10px; border-radius: 8px; max-width: 200px;">
+    <img src="avatar.jpg" alt="Vladimir Preobrazhenskiy" style="width: 100%; border-radius: 8px;">
+    <p style="margin: 5px 0 0; font-size: 14px;">Born in 1988</p>
+</div>
 
 
 My professional portrait
