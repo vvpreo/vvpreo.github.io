@@ -197,5 +197,6 @@ Despite basic humanitarian education, by the end of university studies, curiosit
 | Facebook          | [https://www.facebook.com/vvpreo](https://www.facebook.com/vvpreo)         |
 | Github            | [https://github.com/vvpreo](https://github.com/vvpreo)                     |
 
+---
 
 As of february 2025
