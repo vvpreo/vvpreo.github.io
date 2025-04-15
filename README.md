@@ -6,4 +6,4 @@
 
 # CV ENGLISH
 
-https://cv.vvpreo.net/en
+https://vvpreo.github.io
