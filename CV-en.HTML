@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vladimir Preobrazhenskiy - Resume</title>
+    <link rel="icon" type="image/png" href="avatar-circle.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .a4-page {
+            width: 210mm;
+            /*height: 297mm;*/
+            margin: 0 auto;
+            padding: 10mm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .content {
+            font-family: Helvetica;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        code {
+            font-family: monospace;
+            background-color: #ededed98;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        h1 {
+            margin-bottom: 0;
+            margin-top: 0;
+            font-size: 32px; /* or 36px, 40px depending on visual goal */
+        }
+
+        h2,
+        h3,
+        h4,
+        p {
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+
+            .a4-page {
+                box-shadow: none;
+                margin: 0;
+                padding: 10mm;
+                width: auto;
+                height: auto;
+                page-break-after: always;
+            }
+
+            .job-position {
+                page-break-inside: avoid;
+            }
+
+            table, h2, h3 {
+                page-break-inside: avoid;
+            }
+
+            .active {
+                background-color: #4CAF50 !important;
+                color: white !important;
+            }
+
+            .timeline-table, .timeline-table th, .timeline-table td {
+                border: 1px solid #000 !important;
+                color: #000 !important;
+            }
+
+        }
+
+        /*TIMELINE TABLE*/
+        .timeline-table {
+            border-collapse: collapse;
+            font-size: 9px;
+            text-align: center;
+        }
+
+        .timeline-table th, .timeline-table td {
+            border: 1px solid #ccc;
+            padding: 1px 1px;
+        }
+
+        .active {
+            background-color: #4CAF50 !important; /* force rendering */
+            color: white !important;
+        }
+
+    </style>
+</head>
+
+
+<!--#############################################################-->
+<!--#############################################################-->
+<!--#############################################################-->
+
+
+<body>
+<div class="a4-page">
+    <div class="content">
+        <table>
+            <tr>
+                <td width="220">
+                    <img src="avatar-circle.png" alt="photo" width="200"/>
+                </td>
+                <td>
+                    <h1>Vladimir Preobrazhenskiy</h1>
+                    <h4>Developer / Tech Lead</h4>
+                    <p>
+                        From Russia, currently living in Thailand (UTC+7)<br><br>
+                        <strong>📍 Desired locations:</strong><br>
+                        Remote, UAE, Singapore, Portugal, Spain<br>
+                    </p>
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="mailto:vvpreo@gmail.com">
+                                    <img src="icons8-gmail-color-48.png" alt="Gmail"
+                                         style="height:48px; vertical-align:middle; margin-right:4px;">
+                                    Email
+                                </a>
+                            </td>
+                            <td>
+                                <a href="https://t.me/vvpreo">
+                                    <img src="icons8-telegram-48.png" alt="Telegram"
+                                         style="height:48px; vertical-align:middle; margin-right:4px;">
+                                    Telegram
+                                </a>
+                            </td>
+                            <td>
+                                <a href="https://linkedin.com/in/vvpreo">
+                                    <img src="icons8-linkedin-48.png" alt="LinkedIn"
+                                         style="height:48px; vertical-align:middle; margin-right:4px;">
+                                    LinkedIn
+                                </a>
+                            </td>
+                            <td>
+                                <a href="https://github.com/vvpreo">
+                                    <img src="icons8-github-48.png" alt="Github"
+                                         style="height:48px; vertical-align:middle; margin-right:4px;">
+                                    Github
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+        </table>
+
+        <h2>💬 About me</h2>
+        <p style="text-align: justify;">
+            Seasoned IT specialist with over a decade of experience in developing and
+            managing innovative products.
+            Passionate about leveraging AI to create impactful solutions that drive business value and client's
+            satisfaction. Expert in conversational AI driven systems, Architecture, DevOps practices, and cloud
+            infrastructures, with a strong background in programming and data analysis.<br>
+            Proven leader with the ability to join or manage cross-functional agile teams to deliver top solutions and
+            products. Eager to collaborate with forward-thinking companies to invent the future of technology and the
+            way we
+            live.</p>
+        <!--        <br>-->
+        🔸 <u>Languages</u>:
+        <code>Russian</code> (native),
+        <code>English</code> (B2).
+        <br>
+        🔸 <u>Conversational AI</u>: ~5 years in the field + Won <a
+            href="https://www.linkedin.com/posts/rasa_ai-conversationalai-llm-activity-7317538738090225664-kXbE?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAao-FsBiSWlTCfcJPWpFrZ4uOKTdKkaL3w">
+        RASA 2025 AGENT BUILDING
+        CHALLENGE</a>. Applied LLM Prompting, finetuning.
+        <br>
+        <br>
+
+        <!--#############################################################-->
+        <!--#############################################################-->
+        <!--#############################################################-->
+
+        <h2>🛠️ Core skills</h2>
+        <div id="timeline-container"></div>
+        <br>
+
+        <hr>
+
+        <div style="page-break-after: always;"></div>
+
+        <h2>📅 Career path</h2>
+        <div class="job-position">
+
+            <h3>🔷 StoryJar (WRITER AI AGENT POC)</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2024.10 ~ present</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Lead, Author of the idea</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td>Run POC to understand value of possible product – AI based story generation on user's behalf.
+                        Decided to limit tech team up to 3 members including myself.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV/INFRA</u>:
+                        <code>Github</code> (with actions),
+                        <code>Terraform</code>,
+                        <code>AWS</code>,
+                        <code>Digital Ocean</code>,
+                        <code>Docker</code><br>
+
+                        <u>ARCHITECTURE</u>:
+                        <code>NGINX</code>,
+                        <code>Postgres</code>,
+                        <code>RabbitMQ</code>,
+                        <code>S3</code><br>
+
+                        <u>DEV</u>:
+                        <code>Python</code>,
+                        <code>Fastapi</code>,
+                        <code>GRPC</code>,
+                        <code>websockets</code>,
+                        <code>hugging face</code>
+                        dedicated endpoints,
+                        <code>JWT</code> auth,
+                        <code>React</code> + <code>TypeScript</code></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td><u>ADM/MNGMT</u>: Project planning, Backlog composition, Hiring developers, Budgeting<br>
+                        <u>TECH</u>: Requirements, Architecture, Maintain CICD, Coding core modules.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 Prepare cloud based demo stand:<br>
+                        🔹 Basic AI interactions (API, Persistence, streaming)<br>
+                        🔹 Media files automatic preprocessing (images, audio, video - TBD)<br>
+                        🔹 Story generation process<br>
+                        🔹 Feedback questionnaire<br>
+                        👨‍💻 MVP agent for best results. Work in progress - NOW<br>
+                        👨‍💻 Run user testing with predefined expert writers and ordinary users. Collect feedback and
+                        define
+                        further steps.<br>– TBD
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <br>
+        <div class="job-position">
+            <h3>🔷 StoryJar (Family Archive Prototype)</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2024.02 - 2024.12</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Lead</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td>Time bounded activity for creating a prototype of a family archive. 5 people in the team working
+                        part-time.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV/INFRA</u>:
+                        <code>Github</code> (with actions),
+                        <code>Terraform</code>,
+                        <code>AWS</code>,
+                        <code>Digital Ocean</code>,
+                        <code>Docker</code><br>
+
+                        <u>ARCHITECTURE</u>:
+                        <code>NGINX</code>,
+                        <code>Postgres</code>,
+                        <code>RabbitMQ</code>,
+                        <code>S3</code><br>
+
+                        <u>DEV</u>:
+                        <code>Python</code>,
+                        <code>Fastapi</code>,
+                        <code>Insightface</code>,
+                        <code>GRPC</code>,
+                        <code>websockets</code>,
+                        <code>JWT</code> auth,
+                        <code>Flutter</code>,
+                        <code>Figma</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>
+                        <u>ADM/MNGMT</u>: Project planning, Backlog composition, Hiring developers, Budgeting<br>
+                        <u>TECH</u>: Requirements, Architecture, Maintain CICD, Coding core modules.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 Prepare cloud based demo stand:<br>
+                        🔹 Basic AI interactions (API, Persistence, streaming)<br>
+                        🔹 Media files automatic preprocessing (images, audio, video - TBD)<br>
+                        🔹 Story generation process<br>
+                        🔹 Feedback questionnaire<br>
+                        💪 MVP agent for best results. Work in progress - NOW<br>
+                        💪 Run user testing with predefined expert writers and ordinary users. Collect feedback and
+                        define
+                        further steps.<br>– TBD
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="job-position">
+
+            <h3>🔷 QRIT (freelance)</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2023.07 - 2024.02</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>DevOps (freelance)</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td><a href="https://landing.qrit.dev/">QRit</a>
+                        is a platform designed to help restaurants and hospitality businesses offer a seamless,
+                        multilingual, and cashless experience for their customers using QR codes.
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV/INFRA</u>:
+                        <code>Github</code> (with actions),
+                        <code>Terraform</code>,
+                        <code>Digital Ocean</code>,
+                        <code>GoDaddy</code>,
+                        <code>Docker</code><br>
+
+                        <u>ARCHITECTURE</u>:
+                        <code>NGINX</code>,
+                        <code>Postgres</code>,
+                        <code>Redis</code>,
+                        <code>S3</code><br>
+
+                        <u>DEV</u>:
+                        <code>Figma</code>,
+                        <code>Node</code> + <code>TypeScript</code>,
+                        <code>Next</code> + <code>TypeScript</code>,
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>
+                        Maintain CI/CD Pipelines. Cloud Infrastructure management.
+                        Database architecture. Techical analysis for 3rd party integrations
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 Set up cloud infrastructure with Terraform + GoDaddy + Digital Ocean.<br>
+                        💪 Configured CI/CD pipelines for DEV, TEST, PROD stands.<br>
+                        💪 Provieded Database model for DEV team.<br>
+                        💪 Provided Streamlit based Admin panel for early stage of product.<br>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <br>
+        <div class="job-position">
+
+            <h3>🔷 Realtalk (Insitech Development, Realtalk)</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2021.05 - 2023.12</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Tech Lead</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td>Realtalk was established to develop a software complex that enables goal-oriented voice
+                        dialogues
+                        across a wide range of scenarios.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV/INFRA</u>:
+                        <code>Gitlab</code>,
+                        <code>Ansible</code>,
+                        <code>Terraform</code>,
+                        <code>Docker Swarm</code><br>
+
+                        <u>ARCHITECTURE</u>:
+                        <code>Microservices</code>,
+                        <code>SIP</code>,
+                        <code>Yandex Cloud</code>,
+                        <code>NGINX</code>,
+                        <code>Postgres</code>,
+                        <code>Redis</code>,
+                        <br>
+
+                        <u>DEV</u>:
+                        <code>Python</code>,
+                        <code>BERT</code> based custom intent detection model,
+                        <code>Vue</code> + <code>TypeScript</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>
+                        Interview and hire team members. Organizing DEV + delivery process.
+                        Architecture design. Infrastructure management.
+                        POC of new features.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 Full team reorganisation for best results.<br>
+                        💪 Delivered core component, that handles telephone conversation in realtime with features:<br>
+                        🔹 TTS / Predefined recordings<br>
+                        🔹 Handling interruption requests<br>
+                        🔹 Dialogue creation framework<br>
+                        🔹 Scalability<br>
+                        💪 Configured solution for cloud based and on-premise installations.<br>
+                        💪 Reached top competitors convertion rate in 1 year after product development started.<br>
+                        💪 Product was <a
+                            href="https://reestr.digital.gov.ru/reestr/870268/?sphrase_id=5454194">added</a> to
+                        the official Russian software registry:<br>
+                        💪 Developed inhouse stands management system to ease delivery process<br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+
+
+        <div class="job-position">
+            <h3>🔷 X5 Retail Group (Speech Tech)</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2018.10 - 2021.04</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Senior Developer</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td><a href="https://www.x5.ru/">X5 Retail Group</a>'s R&D lab was focused on delivering digital
+                        solutions for internal (primarily) projects utilising modern technologies in ML area with focus
+                        on
+                        NLP/CV.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>INFRA</u>:
+                        <code>Gitlab</code> (on-prem installation),
+                        <code>K8S</code> (on-prem installation)
+                        <br>
+
+                        <u>DEV/ARCH</u>:
+                        <code>Scala</code>,
+                        <code>SIP</code>,
+                        <code>Python</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>
+                        Participation in product shaping. Running POC for internal clients.
+                        Participate in interviews with tech candidates. Develop solution within enterprise arch
+                        landscape<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 In close interaction with the management of the big data department, participated in the
+                        preparation of a large RnD case at the group company level. The case passed the defense and
+                        received
+                        approval from the president and included two major areas (Video Analytics and Speech
+                        Technologies)<br>
+                        💪 As a developer (later technical product leader), developed and implemented a system that
+                        allowed
+                        conducting dialogues with retail chain customers over the phone when they contacted the call
+                        center.
+                        The entire technology stack was developed and implemented within the organization, with minimal
+                        involvement of contracting organizations.<br>
+                        💪 The flagship scenario implemented on the basis of the developed solution was the
+                        registration/replacement of a loyalty card by voice without involving people, with one of the
+                        best
+                        conversion rates on the market.<br>
+                        💪 Developed and implemented a customer support bot in the WhatsApp channel.<br>
+                        💪 Expanded team, ensured the implementation of an outbound call system for collecting <a
+                            href="https://en.wikipedia.org/wiki/Net_promoter_score"> NPS</a> +
+                        <a href="https://en.wikipedia.org/wiki/Customer_satisfaction">CS</a> . The system included
+                        services
+                        responsible for coordinating outbound traffic in accordance with
+                        the organization's contact policies. Solution is able to handle several hundred thousand
+                        calls per day.
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="job-position">
+
+            <h3>🔷 X5 Retail Group (Big Data)</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2017.11 - 2018.09</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Big Data Specialist</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+
+                    <td>Part of <a href="https://www.x5.ru/">X5 Retail Group</a>'s
+                        digital transformation process was to establish Big Data department,
+                        which core responsibility was to deliver data related digital products for internal use.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV</u>:
+                        <code>Python</code>
+                        <code>Jupyter</code>
+                        <code>SQL</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>
+                        Participation in product shaping, running POC for internal customers<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 Prepared a data showcase on product stock balances for "Pyaterochka" subsidiary.
+                        Revealed and identified stocks for several billion of rubles. Ensured smooth knowledge transfer
+                        to a
+                        dedicated team continued with the product.
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="job-position">
+            <h3>🔷 Beeline</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2015.09 - 2017.04</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Project Manager in Big Data department</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td><a href="https://moskva.beeline.ru/">Beeline</a> is a well known russian federal level digital
+                        provider.
+                        Company owns an industrial Hadoop cluster with petabytes of
+                        varying-quality data. The division was focused on delivering business value using open-source
+                        on-premise Big Data infrastructure.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV/ARCH</u>:
+                        <code>Hadoop</code>,
+                        <code>SPARK</code>,
+                        <code>SQL</code>,
+                        <code>Python</code>,
+                        <code>Java</code>,
+                        <code>Shell</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>Initiate/Maintain projects for internal enterprise customers.</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        Participated in multiple activities in different roles:<br>
+                        💪 <strong>Manager</strong>: Introduced Agile practices at division level.<br>
+                        💪 <strong>Data Scientist</strong>: Built model for gender prediction using SPARK.<br>
+                        💪 <strong>Data Engineer</strong>: Designed ETL pipelines for churn prediction analysis.<br>
+                        💪 <strong>Data Analyst</strong>: Delivered subscriber age prediction model with automated
+                        pipeline.
+                        Here I was first in the Big Data department who delivered production-grade SPARK-based solution.<br>
+                        💪 <strong>Manager</strong>: Prepared pilot recommender system for web/mobile.<br>
+                        💪 <strong>Manager</strong>: Built "Golden Record" system for customer data unification.
+                        💪 <strong>Data Engineer</strong>: Participated in Hadoop cluster enhancements and tool
+                        testing.<br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="job-position">
+
+            <h3>🔷 Accenture</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2012.03 - 2015.08</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Analyst</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td><a href="https://www.accenture.com/">Accenture</a> is a multinational professional services
+                        company
+                        that specializes in IT services and consulting.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV</u>:
+                        <code>Python</code>,
+                        <code>Java</code>,
+                        <code>Shell</code>,
+                        <code>SQL</code>,
+                        <code>Informatica</code>,
+                        <code>Hadoop</code>,
+                        <code>Anylogic</code>,
+                        <code>Photoscan</code>,
+                        <code>Linux</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>
+                        Participate in internal R&D and customer-facing projects. Ensure integration of diverse
+                        components.
+                        Provide scalable, fault-tolerant solutions. Deliver modeling, analytics, and data processing
+                        pipelines. Prepare documentation and specs.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 Ensured operability of computing cluster in internal R&D project for infrastructure monitoring
+                        and
+                        optimization (Python, Shell, Java).<br>
+                        💪 Participated Hadoop pilot for major Russian bank incl. cluster setup, MapReduce, social
+                        network
+                        crawlers (Java).<br>
+                        💪 Developed detailed Anylogic-based simulation of warehouse throughput for a well-known russian
+                        online retailer.<br>
+                        💪 Participated in data mart delivery for risk department in Russia's major bank: requirements,
+                        specs, ETL with SQL and Informatica.<br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="job-position">
+
+            <h3>🔷 Luxoft</h3>
+            <table>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Period</strong></td>
+                    <td>2009.11 - 2012.02</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Role</strong></td>
+                    <td>Junior Developer</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>About</strong></td>
+                    <td><a href="https://www.luxoft.com/">Luxoft</a> is a multinational technology company providing
+                        software development services and IT solutions.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                    <td>
+                        <u>DEV</u>:
+                        <code>C</code>,
+                        <code>Java</code>,
+                        <code>Shell</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                    <td>
+                        Participate in embedded systems development. Write tests, create and review code.
+                        Bug fixing, participated in agile rituals.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Achievements</strong></td>
+                    <td>
+                        💪 Created ZigBee protocol stack simulator, accelerating test cycles.<br>
+                        💪 Gained solid low-level programming experience working with boards/microcontrollers. Learned C,
+                        Java<br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <h2>🎓 Education</h2>
+        <h3>Primary</h3>
+        <p>
+            <a href="https://www.hse.ru/">Higher School of Economics</a>, Department of Sociology, specialization
+            "Analysis
+            of Social Institutions". 2010, Bachelor.
+            <br>
+            Defended a graduation thesis on the topic "Constructing the Mechanism of Trust towards Machines as Subjects
+            of
+            Social Relations".
+        </p>
+        <br>
+        <h3>Additional</h3>
+        <ul>
+            <li>In 2024.10. Kubernetes - Complete Course on Kubernetes. <a
+                    href="https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/">Certificate
+                Link</a>
+            </li>
+            <li>In 2018. Training at Skolkovo. <a href="https://courses.skolkovo.ru/event/courses/business-transformation/">Трансформация и рост бизнеса в эпоху новых технологий</a> (Business Transformation and Growth in the Age of New Technologies)</li>
+            <li>In 2016. Beeline Data School</li>
+            <strong>Cloudera</strong>:
+            <li>In 2013. Introduction to Data Science: Building Recommender Systems. Cloudera.</li>
+            <li>In 2013. Cloudera Certified Specialist in Apache Hbase. Cloudera.</li>
+            <li>In 2012. Cloudera Certified Developer For Apache Hadoop. Cloudera.</li>
+            <li>In 2012. Cloudera Certified Administrator for Apache Hadoop. Cloudera.</li>
+            <strong>Basic</strong>:
+            <li>In 2010. Java, Java EE. "Specialist" at Bauman Moscow State Technical University.</li>
+            <li>In 2009. Visual C/C++. "Specialist" at Bauman Moscow State Technical University.</li>
+        </ul>
+    </div>
+
+</div>
+<script>
+    const skillsTimeline = {
+        "*nix OS": [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+        "Develpoment": [],
+        "C": [2009, 2010],
+        "Java": [2011, 2012, 2013, 2014, 2015],
+        "Python (DEV)": [2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+        "Python (DS)": [2017, 2018, 2019, 2025],
+        "Scala": [2018, 2019, 2020],
+        "SQL": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+        "Redis": [2021, 2022, 2023, 2024, 2025],
+        "K8S": [2025],
+        "CI": [],
+        "Gitlab": [2019, 2020, 2021, 2022, 2023],
+        "Github": [2023, 2024, 2025],
+        "CD": [],
+        "Docker": [2019, 2020, 2021, 2022, 2023, 2024, 2025],
+        "Docker Swarm": [2021, 2022, 2023, 2024, 2025],
+        "Ansible": [2021, 2022, 2023],
+        "Clouds": [],
+        "Terraform": [2021, 2022, 2023, 2024, 2025],
+        "Yandex Cloud": [2021, 2022, 2023, 2024],
+        "Digital Ocean": [2023, 2024, 2025],
+        "AWS": [2024, 2025],
+        "Runpod": [2025],
+        "Hugging Face": [2025],
+        "Other": [],
+        "SIP": [2019, 2020, 2021, 2022, 2023],
+        "LLMs": [2024, 2025],
+        "RASA": [2025],
+    };
+
+    window.onload = function () {
+        const startYear = 2009;
+        const endYear = 2025;
+
+        const table = document.createElement('table');
+        table.className = 'timeline-table';
+
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+
+        const skillHeader = document.createElement('th');
+        skillHeader.textContent = 'Skill';
+        skillHeader.style.backgroundColor = '#cccccc';  // darker header
+        headerRow.appendChild(skillHeader);
+
+        for (let y = startYear; y <= endYear; y++) {
+            const th = document.createElement('th');
+            th.textContent = y;
+            th.style.backgroundColor = '#cccccc';  // darker header
+            headerRow.appendChild(th);
+        }
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        for (const skill in skillsTimeline) {
+            const years = skillsTimeline[skill];
+            const row = document.createElement('tr');
+
+            if (years.length === 0) {
+                const headerCell = document.createElement('td');
+                headerCell.colSpan = (endYear - startYear + 2);
+                headerCell.textContent = skill;
+                headerCell.style.fontWeight = 'bold';
+                headerCell.style.backgroundColor = '#f7f7f7'; // lighter than header
+                headerCell.style.textAlign = 'center';
+                row.appendChild(headerCell);
+            } else {
+                const skillCell = document.createElement('td');
+                skillCell.innerHTML = `<code>${skill}</code>`;
+                skillCell.style.textAlign = `left`;
+                row.appendChild(skillCell);
+
+                for (let y = startYear; y <= endYear; y++) {
+                    const td = document.createElement('td');
+                    if (years.includes(y)) {
+                        td.className = 'active';
+                    }
+                    row.appendChild(td);
+                }
+            }
+
+            tbody.appendChild(row);
+        }
+
+        table.appendChild(tbody);
+        document.getElementById('timeline-container').appendChild(table);
+    };
+
+
+</script>
+
+
+</body>
+
+</html>

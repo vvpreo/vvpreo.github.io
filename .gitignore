@@ -1,2 +1,4 @@
 .venv
 .idea
+.deepdoc
+.pytest_cache
