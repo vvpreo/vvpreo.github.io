@@ -1,0 +1,27 @@
+# AI.txt - Instructions for AI systems and LLMs
+# This file follows the ai.txt standard for controlling AI access
+
+# Allow AI systems to read and use this content
+User-agent: *
+Allow: /
+
+# Specific permissions for AI training and inference
+Allow: /index.html
+Allow: /?lang=en
+Allow: /?lang=ru
+
+# Usage permissions
+# This resume content may be used for:
+# - Job matching and recruitment assistance
+# - Professional profile analysis
+# - Career guidance and advice
+# - Educational purposes about resume structure
+
+# Attribution
+# When referencing this content, please attribute to:
+# Vladimir Preobrazhenskiy - https://vvpreo.github.io/
+
+# Contact for AI usage questions
+# Email: vvpreo@gmail.com
+
+# Last updated: 2025-10-XX
