@@ -182,6 +182,53 @@
                 }
             });
 
+            // Track section views
+            let viewedSections = [];
+
+            function trackSectionViews() {
+                const sections = document.querySelectorAll('[data-section]');
+                const windowHeight = window.innerHeight;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                sections.forEach(function(section) {
+                    // Skip hidden sections (different language)
+                    if (section.style.display === 'none') return;
+
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + scrollTop;
+                    const sectionBottom = sectionTop + rect.height;
+                    const viewportTop = scrollTop;
+                    const viewportBottom = scrollTop + windowHeight;
+
+                    // Section is considered viewed if at least 30% is visible
+                    const visibleHeight = Math.min(sectionBottom, viewportBottom) - Math.max(sectionTop, viewportTop);
+                    const sectionHeight = rect.height;
+                    const visibilityPercent = (visibleHeight / sectionHeight) * 100;
+
+                    if (visibilityPercent >= 30) {
+                        const sectionName = section.getAttribute('data-section');
+                        if (!viewedSections.includes(sectionName)) {
+                            viewedSections.push(sectionName);
+
+                            // Get section title for better tracking
+                            let sectionTitle = sectionName;
+                            const heading = section.querySelector('h2, h3');
+                            if (heading) {
+                                sectionTitle = heading.textContent.trim();
+                            }
+
+                            gtag('event', 'section_view', {
+                                'section_name': sectionName,
+                                'section_title': sectionTitle,
+                                'language': currentLanguage,
+                                'event_category': 'engagement',
+                                'event_label': 'Resume Section Viewed'
+                            });
+                        }
+                    }
+                });
+            }
+
             // Track reading progress with scroll depth
             let maxScroll = 0;
             let scrollMilestones = [25, 50, 75, 90, 100];
@@ -214,8 +261,16 @@
                 if (scrollTimeout) {
                     clearTimeout(scrollTimeout);
                 }
-                scrollTimeout = setTimeout(trackScrollDepth, 100);
+                scrollTimeout = setTimeout(function() {
+                    trackScrollDepth();
+                    trackSectionViews();
+                }, 100);
             });
+
+            // Initial section view check
+            setTimeout(function() {
+                trackSectionViews();
+            }, 1000);
 
             // Track time spent on page
             let startTime = Date.now();
@@ -458,7 +513,7 @@
                         </table>
             </table>
 
-            <div data-lang="en">
+            <div data-lang="en" data-section="about">
                 <h2>💬 About me</h2>
                 <p style="text-align: justify;">
                     IT specialist with over a decade of experience in developing and
@@ -487,7 +542,7 @@
                 <br>
                 <br>
             </div>
-            <div data-lang="ru" style="display: none;">
+            <div data-lang="ru" style="display: none;" data-section="about">
                 <h2>💬 Обо мне</h2>
                 <p style="text-align: justify;">
                     IT-специалист с более чем десятилетним опытом разработки и
@@ -516,10 +571,10 @@
             <!--#############################################################-->
             <!--#############################################################-->
 
-            <div data-lang="en">
+            <div data-lang="en" data-section="skills">
                 <h2>🛠️ Core skills</h2>
             </div>
-            <div data-lang="ru" style="display: none;">
+            <div data-lang="ru" style="display: none;" data-section="skills">
                 <h2>🛠️ Основные навыки</h2>
             </div>
             <div id="timeline-container"></div>
@@ -530,14 +585,14 @@
 
         <div class="careerpath">
             <div class="print-unsplittable">
-                <div data-lang="en">
+                <div data-lang="en" data-section="career">
                     <h2>📅 Career path</h2>
                 </div>
-                <div data-lang="ru" style="display: none;">
+                <div data-lang="ru" style="display: none;" data-section="career">
                     <h2>📅 Карьерный путь</h2>
                 </div>
                 <hr>
-                <h3>🔷 StoryJar</h3>
+                <h3 data-section="storyjar">🔷 StoryJar</h3>
                 <div data-lang="en">
                     <table>
                         <tr>
@@ -770,7 +825,7 @@
             <div class="print-unsplittable">
                 <hr>
                 <div data-lang="en">
-                    <h3>🔷 QRit</h3>
+                    <h3 data-section="qrit">🔷 QRit</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Period</strong></td>
@@ -835,7 +890,7 @@
                     </table>
                 </div>
                 <div data-lang="ru" style="display: none;">
-                    <h3>🔷 QRit</h3>
+                    <h3 data-section="qrit">🔷 QRit</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Период</strong></td>
@@ -905,7 +960,7 @@
             <div class="print-unsplittable">
                 <hr>
                 <div data-lang="en">
-                    <h3>🔷 <a href="https://insitech.dev/">Insitech Development</a></h3>
+                    <h3 data-section="insitech">🔷 <a href="https://insitech.dev/">Insitech Development</a></h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Period</strong></td>
@@ -1000,7 +1055,7 @@
                     </table>
                 </div>
                 <div data-lang="ru" style="display: none;">
-                    <h3>🔷 <a href="https://insitech.dev/">Insitech Development</a></h3>
+                    <h3 data-section="insitech">🔷 <a href="https://insitech.dev/">Insitech Development</a></h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Период</strong></td>
@@ -1099,7 +1154,7 @@
             <div class="print-unsplittable">
                 <hr>
                 <div data-lang="en">
-                    <h3>🔷 X5 Retail Group</h3>
+                    <h3 data-section="x5">🔷 X5 Retail Group</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Period</strong></td>
@@ -1192,7 +1247,7 @@
                     </table>
                 </div>
                 <div data-lang="ru" style="display: none;">
-                    <h3>🔷 X5 Retail Group</h3>
+                    <h3 data-section="x5">🔷 X5 Retail Group</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Период</strong></td>
@@ -1331,7 +1386,7 @@
             <div class="print-unsplittable">
                 <hr>
                 <div data-lang="en">
-                    <h3>🔷 Beeline (Big Data Department)</h3>
+                    <h3 data-section="beeline">🔷 Beeline (Big Data Department)</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Period</strong></td>
@@ -1413,7 +1468,7 @@
                     </table>
                 </div>
                 <div data-lang="ru" style="display: none;">
-                    <h3>🔷 Билайн (Департамент Big Data)</h3>
+                    <h3 data-section="beeline">🔷 Билайн (Департамент Big Data)</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Период</strong></td>
@@ -1497,7 +1552,7 @@
             <div class="print-unsplittable">
                 <hr>
                 <div data-lang="en">
-                    <h3>🔷 Accenture</h3>
+                    <h3 data-section="accenture">🔷 Accenture</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Period</strong></td>
@@ -1576,7 +1631,7 @@
                     </table>
                 </div>
                 <div data-lang="ru" style="display: none;">
-                    <h3>🔷 Accenture</h3>
+                    <h3 data-section="accenture">🔷 Accenture</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Период</strong></td>
@@ -1659,7 +1714,7 @@
             <div class="print-unsplittable">
                 <hr>
                 <div data-lang="en">
-                    <h3>🔷 Luxoft</h3>
+                    <h3 data-section="luxoft">🔷 Luxoft</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Period</strong></td>
@@ -1707,7 +1762,7 @@
                     </table>
                 </div>
                 <div data-lang="ru" style="display: none;">
-                    <h3>🔷 Luxoft</h3>
+                    <h3 data-section="luxoft">🔷 Luxoft</h3>
                     <table>
                         <tr>
                             <td style="vertical-align: top;"><strong>Период</strong></td>
@@ -1761,7 +1816,7 @@
         <div class="print-unsplittable">
             <hr>
             <hr>
-            <div data-lang="en">
+            <div data-lang="en" data-section="education">
                 <h2>🎓 Education</h2>
                 <h3>Higher</h3>
                 <p>
@@ -1777,7 +1832,7 @@
                 <br>
                 <h3>Additional</h3>
             </div>
-            <div data-lang="ru" style="display: none;">
+            <div data-lang="ru" style="display: none;" data-section="education">
                 <h2>🎓 Образование</h2>
                 <h3>Высшее</h3>
                 <p>
