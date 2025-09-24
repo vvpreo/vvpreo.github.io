@@ -108,10 +108,12 @@
             const switcher = document.createElement('div');
             switcher.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 1000; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px;';
             switcher.innerHTML = `
-                <div style="margin-bottom: 5px; font-weight: bold;">Language:</div>
+                <div style="margin-bottom: 5px; font-weight: bold;" data-lang="en">Language:</div>
+                <div style="margin-bottom: 5px; font-weight: bold;" data-lang="ru" style="display: none;">Язык:</div>
                 <button onclick="switchLanguage('en')" style="margin-right: 5px; padding: 5px 10px;">EN</button>
                 <button onclick="switchLanguage('ru')" style="padding: 5px 10px;">RU</button>
-                <div style="margin-top: 5px; font-size: 12px;">Current: <span id="current-lang">${currentLanguage.toUpperCase()}</span></div>
+                <div style="margin-top: 5px; font-size: 12px;" data-lang="en">Current: <span id="current-lang"> EN </span></div>
+                <div style="margin-top: 5px; font-size: 12px; "data-lang="ru">Текущий: <span id="current-lang"> RU </span></div>
             `;
             document.body.appendChild(switcher);
         }
