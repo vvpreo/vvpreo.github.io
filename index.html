@@ -5,6 +5,132 @@
     <meta charset="UTF-8">
     <title>Vladimir Preobrazhenskiy - Resume</title>
     <link rel="icon" type="image/png" href="avatar-circle.png">
+
+    <!-- Language detection and switching -->
+    <script>
+        // Check URL parameters first
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang');
+
+        let currentLanguage = 'en'; // default to English
+
+        if (langParam === 'ru' || langParam === 'en') {
+            currentLanguage = langParam;
+            localStorage.setItem('preferredLanguage', currentLanguage);
+        } else {
+            // Check if user has a stored preference
+            const storedLang = localStorage.getItem('preferredLanguage');
+            if (storedLang) {
+                currentLanguage = storedLang;
+            } else {
+                // Detect user's location via IP
+                detectUserLocation();
+            }
+        }
+
+        function detectUserLocation() {
+            // Try multiple geolocation services for better reliability
+            const services = [
+                'https://ipapi.co/json/',
+                'https://ip-api.com/json/',
+                'https://ipinfo.io/json'
+            ];
+
+            let serviceIndex = 0;
+
+            function tryNextService() {
+                if (serviceIndex >= services.length) {
+                    // All services failed, default to English
+                    currentLanguage = 'en';
+                    setLanguage(currentLanguage);
+                    return;
+                }
+
+                fetch(services[serviceIndex])
+                    .then(response => response.json())
+                    .then(data => {
+                        let countryCode = data.country_code || data.countryCode || data.country;
+                        if (countryCode === 'RU') {
+                            currentLanguage = 'ru';
+                        } else {
+                            currentLanguage = 'en';
+                        }
+                        localStorage.setItem('preferredLanguage', currentLanguage);
+                        setLanguage(currentLanguage);
+                    })
+                    .catch(error => {
+                        console.log(`Service ${services[serviceIndex]} failed:`, error);
+                        serviceIndex++;
+                        tryNextService();
+                    });
+            }
+
+            tryNextService();
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => updateLanguageDisplay());
+            } else {
+                updateLanguageDisplay();
+            }
+        }
+
+        function updateLanguageDisplay() {
+            // Hide all language sections
+            const allLangSections = document.querySelectorAll('[data-lang]');
+            allLangSections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show sections for current language
+            const currentLangSections = document.querySelectorAll(`[data-lang="${currentLanguage}"]`);
+            currentLangSections.forEach(section => {
+                section.style.display = 'block';
+            });
+
+            // Update page title
+            if (currentLanguage === 'ru') {
+                document.title = 'Владимир Преображенский - Резюме';
+            } else {
+                document.title = 'Vladimir Preobrazhenskiy - Resume';
+            }
+        }
+
+        // Set initial language if not detected via IP
+        if (langParam || localStorage.getItem('preferredLanguage')) {
+            setLanguage(currentLanguage);
+        }
+
+        // Add language switcher for testing
+        function addLanguageSwitcher() {
+            const switcher = document.createElement('div');
+            switcher.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 1000; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px;';
+            switcher.innerHTML = `
+                <div style="margin-bottom: 5px; font-weight: bold;">Language:</div>
+                <button onclick="switchLanguage('en')" style="margin-right: 5px; padding: 5px 10px;">EN</button>
+                <button onclick="switchLanguage('ru')" style="padding: 5px 10px;">RU</button>
+                <div style="margin-top: 5px; font-size: 12px;">Current: <span id="current-lang">${currentLanguage.toUpperCase()}</span></div>
+            `;
+            document.body.appendChild(switcher);
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('preferredLanguage', currentLanguage);
+            setLanguage(currentLanguage);
+            document.getElementById('current-lang').textContent = currentLanguage.toUpperCase();
+
+            // Update URL without reloading
+            const url = new URL(window.location);
+            url.searchParams.set('lang', lang);
+            window.history.replaceState({}, '', url);
+        }
+
+        // Add switcher when page loads
+        document.addEventListener('DOMContentLoaded', addLanguageSwitcher);
+    </script>
     <style>
         body {
             margin: 0;
@@ -136,13 +262,24 @@
                         <img src="avatar-circle.png" alt="photo" width="200"/>
                     </td>
                     <td>
-                        <h1>Vladimir Preobrazhenskiy</h1>
-                        <h4>Developer / Tech Lead</h4>
-                        <p>
-                            Currently living in Thailand (UTC+7)<br><br>
-                            <strong>📍 Desired locations:</strong><br>
-                            Remote, Chiang Mai<br>
-                        </p>
+                        <div data-lang="en">
+                            <h1>Vladimir Preobrazhenskiy</h1>
+                            <h4>Developer / Tech Lead</h4>
+                            <p>
+                                Currently living in Thailand (UTC+7)<br><br>
+                                <strong>📍 Desired locations:</strong><br>
+                                Remote, Chiang Mai<br>
+                            </p>
+                        </div>
+                        <div data-lang="ru" style="display: none;">
+                            <h1>Владимир Преображенский</h1>
+                            <h4>Разработчик / Тех. лидер</h4>
+                            <p>
+                                В настоящее время живу в Таиланде (UTC+7)<br><br>
+                                <strong>📍 Желаемые локации:</strong><br>
+                                Удаленно, Чиангмай<br>
+                            </p>
+                        </div>
                         <table class="contacts-table">
                             <tr>
                                 <td>
@@ -189,36 +326,70 @@
                         </table>
             </table>
 
-            <h2>💬 About me</h2>
-            <p style="text-align: justify;">
-                IT specialist with over a decade of experience in developing and
-                managing innovative products.
-                Passionate about leveraging AI to create impactful solutions that drive business value and client's
-                satisfaction. Expert in conversational AI driven systems, Architecture, DevOps practices, and cloud
-                infrastructures, with a strong background in programming and data analysis.<br>
-                Proven leader with the ability to join or manage cross-functional agile teams to deliver top solutions
-                and
-                products. Eager to collaborate with forward-thinking companies to invent the future of technology and
-                the
-                way we
-                live.</p>
-            <!--        <br>-->
-            🔸 <u>Languages</u>:
-            <code>Russian</code> (native),
-            <code>English</code> (B2).
-            <br>
-            🔸 <u>Conversational AI</u>: ~5 years in the field + <a
-                href="https://rasa.com/blog/rasa-s-2025-agent-building-challenge-announcing-winners/">Won</a> RASA <a
-                href="https://www.linkedin.com/posts/rasa_ai-conversationalai-llm-activity-7317538738090225664-kXbE?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAao-FsBiSWlTCfcJPWpFrZ4uOKTdKkaL3w">
-            2025 AGENT BUILDING CHALLENGE</a>. Applied LLM Prompting, finetuning.
-            <br>
-            <br>
+            <div data-lang="en">
+                <h2>💬 About me</h2>
+                <p style="text-align: justify;">
+                    IT specialist with over a decade of experience in developing and
+                    managing innovative products.
+                    Passionate about leveraging AI to create impactful solutions that drive business value and client's
+                    satisfaction. Expert in conversational AI driven systems, Architecture, DevOps practices, and cloud
+                    infrastructures, with a strong background in programming and data analysis.<br>
+                    Proven leader with the ability to join or manage cross-functional agile teams to deliver top
+                    solutions
+                    and
+                    products. Eager to collaborate with forward-thinking companies to invent the future of technology
+                    and
+                    the
+                    way we
+                    live.</p>
+                <!--        <br>-->
+                🔸 <u>Languages</u>:
+                <code>Russian</code> (native),
+                <code>English</code> (B2).
+                <br>
+                🔸 <u>Conversational AI</u>: ~5 years in the field + <a
+                    href="https://rasa.com/blog/rasa-s-2025-agent-building-challenge-announcing-winners/">Won</a> RASA
+                <a
+                        href="https://github.com/RasaHQ/rasa-community-challenge-2025">
+                    2025 AGENT BUILDING CHALLENGE</a>. Applied LLM Prompting, finetuning.
+                <br>
+                <br>
+            </div>
+            <div data-lang="ru" style="display: none;">
+                <h2>💬 Обо мне</h2>
+                <p style="text-align: justify;">
+                    IT-специалист с более чем десятилетним опытом разработки и
+                    управления инновационными продуктами.
+                    Увлечен использованием ИИ для создания эффективных решений, которые приносят бизнес-ценность и
+                    удовлетворение клиентов. Эксперт в области разговорных ИИ-систем, архитектуры, DevOps-практик и
+                    облачных
+                    инфраструктур, с сильным бэкграундом в программировании и анализе данных.<br>
+                    Готов стать частью agile-команды или управлять ей для создания топовых решений и
+                    продуктов.</p>
+                <!--        <br>-->
+                🔸 <u>Языки</u>:
+                <code>Русский</code> (родной),
+                <code>Английский</code> (B2).
+                <br>
+                🔸 <u>Разговорный ИИ</u>: ~5 лет в области + <a
+                    href="https://rasa.com/blog/rasa-s-2025-agent-building-challenge-announcing-winners/">Победил</a> в
+                RASA <a
+                    href="https://github.com/RasaHQ/rasa-community-challenge-2025">
+                2025 AGENT BUILDING CHALLENGE</a>. Применял LLM Prompting, файнтюнинг.
+                <br>
+                <br>
+            </div>
 
             <!--#############################################################-->
             <!--#############################################################-->
             <!--#############################################################-->
 
-            <h2>🛠️ Core skills</h2>
+            <div data-lang="en">
+                <h2>🛠️ Core skills</h2>
+            </div>
+            <div data-lang="ru" style="display: none;">
+                <h2>🛠️ Основные навыки</h2>
+            </div>
             <div id="timeline-container"></div>
             <hr>
         </div>
@@ -227,381 +398,753 @@
 
         <div class="careerpath">
             <div class="print-unsplittable">
-                <h2>📅 Career path</h2>
+                <div data-lang="en">
+                    <h2>📅 Career path</h2>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <h2>📅 Карьерный путь</h2>
+                </div>
                 <hr>
                 <h3>🔷 StoryJar</h3>
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Period</strong></td>
-                        <td>2024.02 - 2024.12</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Role</strong></td>
-                        <td>Hybrid Role: 50% Product Owner, 50% Architect/DevOps</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>About</strong></td>
-                        <td>
-                            StoryJar is a name of POC activity, aimed to test several hypothesises:<br>
-                            - Heavily prompted modern LLMs can produce high quality stories on user's behalf.<br>
-                            - Conversational capabilities, being added to story generation AI agent provide smoother
-                            UX
-                            and
-                            engage user much more.<br>
-                            - Such stories are essential part of family media archive representation, driven by
-                            smart AI
-                            agents in miltimodal UX environment.<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Tech stack</strong></td>
-                        <td>
-                            <u>DEV/INFRA</u>:
-                            <code>Github</code> (with actions),
-                            <code>Terraform</code>,
-                            <code>AWS</code>,
-                            <code>Digital Ocean</code>,
-                            <code>Docker</code><br>
+                <div data-lang="en">
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Period</strong></td>
+                            <td>2024.02 - 2024.12</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Role</strong></td>
+                            <td>Hybrid Role: 50% Product Owner, 50% Architect/DevOps</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>About</strong></td>
+                            <td>
+                                StoryJar is a name of POC activity, aimed to test several hypothesises:<br>
+                                - Heavily prompted modern LLMs can produce high quality stories on user's behalf.<br>
+                                - Conversational capabilities, being added to story generation AI agent provide smoother
+                                UX
+                                and
+                                engage user much more.<br>
+                                - Such stories are essential part of family media archive representation, driven by
+                                smart AI
+                                agents in miltimodal UX environment.<br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                            <td>
+                                <u>DEV/INFRA</u>:
+                                <code>Github</code> (with actions),
+                                <code>Terraform</code>,
+                                <code>AWS</code>,
+                                <code>Digital Ocean</code>,
+                                <code>Docker</code><br>
 
-                            <u>ARCHITECTURE</u>:
-                            <code>NGINX</code>,
-                            <code>Postgres</code>,
-                            <code>RabbitMQ</code>,
-                            <code>S3</code><br>
+                                <u>ARCHITECTURE</u>:
+                                <code>NGINX</code>,
+                                <code>Postgres</code>,
+                                <code>RabbitMQ</code>,
+                                <code>S3</code><br>
 
-                            <u>DEV</u>:
-                            <code>Python</code>,
-                            <code>Fastapi</code>,
-                            <code>Insightface</code>,
-                            <code>GRPC</code>,
-                            <code>websockets</code>,
-                            <code>JWT</code> auth,
-                            <code>Flutter</code>,
-                            <code>Figma</code>
-                            <code>Miro</code>
+                                <u>DEV</u>:
+                                <code>Python</code>,
+                                <code>Fastapi</code>,
+                                <code>Insightface</code>,
+                                <code>GRPC</code>,
+                                <code>websockets</code>,
+                                <code>JWT</code> auth,
+                                <code>Flutter</code>,
+                                <code>Figma</code>
+                                <code>Miro</code>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
-                        <td>
-                            - Clarifying requirements with stakeholders.<br>
-                            - Detailing the research agenda.<br>
-                            - Identifying key features of proposed prototype.<br>
-                            - Architectural decomposition of prototype. Business architecture, Technical
-                            Architecture.<br>
-                            - Planning and conduction particular steps of RnD process.<br>
-                            - Budget management.<br>
-                            - Team management.<br>
-                            - Team guidance on cornerstone topics.<br>
-                            - Regular reporting on POC status.<br>
-                            - Attending strategic sessions with stakeholders.<br>
-                            - Maintain CI/CD process.
-                        </td>
-                    </tr>
-                    <!-- @formatter:off -->
-                    <tr><td></td><td><hr></td></tr>
-                    <!-- @formatter:on -->
-                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                            <td>
+                                - Clarifying requirements with stakeholders.<br>
+                                - Detailing the research agenda.<br>
+                                - Identifying key features of proposed prototype.<br>
+                                - Architectural decomposition of prototype. Business architecture, Technical
+                                Architecture.<br>
+                                - Planning and conduction particular steps of RnD process.<br>
+                                - Budget management.<br>
+                                - Team management.<br>
+                                - Team guidance on cornerstone topics.<br>
+                                - Regular reporting on POC status.<br>
+                                - Attending strategic sessions with stakeholders.<br>
+                                - Maintain CI/CD process.
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Период</strong></td>
+                            <td>2024.02 - 2024.12</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Роль</strong></td>
+                            <td>Гибридная роль: 50% Product Owner, 50% Архитектор/DevOps</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>О проекте</strong></td>
+                            <td>
+                                StoryJar - название исследовательской активности, направленной на тестирование нескольких гипотез:<br>
+                                - Современные LLM с детальными промптами могут создавать высококачественные истории от
+                                имени пользователя.<br>
+                                - Разговорные возможности, добавленные к ИИ-агенту генерации историй, обеспечивают более
+                                плавный
+                                UX
+                                и
+                                гораздо больше вовлекают пользователя.<br>
+                                - Такие истории являются важной частью представления семейного медиа-архива,
+                                управляемого
+                                умными ИИ
+                                агентами в мультимодальной UX среде.<br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Технологический стек</strong></td>
+                            <td>
+                                <u>DEV/INFRA</u>:
+                                <code>Github</code> (with actions),
+                                <code>Terraform</code>,
+                                <code>AWS</code>,
+                                <code>Digital Ocean</code>,
+                                <code>Docker</code><br>
+
+                                <u>АРХИТЕКТУРА</u>:
+                                <code>NGINX</code>,
+                                <code>Postgres</code>,
+                                <code>RabbitMQ</code>,
+                                <code>S3</code><br>
+
+                                <u>РАЗРАБОТКА</u>:
+                                <code>Python</code>,
+                                <code>Fastapi</code>,
+                                <code>Insightface</code>,
+                                <code>GRPC</code>,
+                                <code>websockets</code>,
+                                <code>JWT</code> auth,
+                                <code>Flutter</code>,
+                                <code>Figma</code>
+                                <code>Miro</code>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Обязанности</strong></td>
+                            <td>
+                                - Уточнение требований с заинтересованными сторонами.<br>
+                                - Детализация исследовательской повестки.<br>
+                                - Определение ключевых функций предлагаемого прототипа.<br>
+                                - Архитектурная декомпозиция прототипа. Бизнес-архитектура, Техническая
+                                архитектура.<br>
+                                - Планирование и проведение конкретных этапов процесса R&D.<br>
+                                - Управление бюджетом.<br>
+                                - Управление командой.<br>
+                                - Руководство командой по ключевым темам.<br>
+                                - Регулярная отчетность о статусе.<br>
+                                - Участие в стратегических сессиях с заинтересованными сторонами.<br>
+                                - Поддержка процесса CI/CD.
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                    </table>
+                </div>
             </div>
             <div class="print-unsplittable">
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
-                        <td>
-                            ✅ <u>Family Archive Prototype</u><br>
-                            💪 Hired team, set up end 2 end development process based on kanban:<br>
-                            💪 Special product Achievements:<br>
-                            🔹 Transparent async media files upload and streaming.
-                            🔹 Automated media description process.
-                            🔹 Semantic search across media objects.
-                            🔹 Custom style and design.
-                            🔹 Can be installed locally or in any cloud.
-                            🔹 Realtime voice input for comments and descriptions.<br>
-                            🔹 Automated Face detection and face recogition for user's images. accuracy
-                            <strong>~97%</strong>.<br>
-                            At strategic session in the end of 2024 prototype was successfully presented to
-                            investor.
-                            We revised our approach and agreed to switch team's focus to story generation capabilities.
-                            Therefore, prototype was frozen and Writer AI Agent phase started.<br>
-                            <br>
-                            ✅ <u>Writer AI Agent</u><br>
-                            Work In Progress here, having several goals:<br>
-                            - Enable automated story generation on top of Prototype's backend.
-                            + Add conversational features for engaging UX<br>
-                            - Identify criteria for good story.<br>
-                            - Tune story generation mechanism.<br>
-                            - Invite 10-30 test user's and collect feedback via questionnaire.<br>
-                            Additionally:<br>
-                            - Add face recognition for user's videos.<br>
-                            - Add scene description to user's videos.<br>
-                            - Enhance Writer to be able to work with various document types.<br>
-                        </td>
-                    </tr>
-                </table>
+                <div data-lang="en">
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
+                            <td>
+                                ✅ <u>Family Archive Prototype</u><br>
+                                💪 Hired team, set up end 2 end development process based on kanban:<br>
+                                💪 Special product Achievements:<br>
+                                🔹 Transparent async media files upload and streaming.
+                                🔹 Automated media description process.
+                                🔹 Semantic search across media objects.
+                                🔹 Custom style and design.
+                                🔹 Can be installed locally or in any cloud.
+                                🔹 Realtime voice input for comments and descriptions.<br>
+                                🔹 Automated Face detection and face recogition for user's images. accuracy
+                                <strong>~97%</strong>.<br>
+                                At strategic session in the end of 2024 prototype was successfully presented to
+                                investor.
+                                We revised our approach and agreed to switch team's focus to story generation capabilities.
+                                Therefore, prototype was frozen and Writer AI Agent phase started.<br>
+                                <br>
+                                ✅ <u>Writer AI Agent</u><br>
+                                Work In Progress here, having several goals:<br>
+                                - Enable automated story generation on top of Prototype's backend.
+                                + Add conversational features for engaging UX<br>
+                                - Identify criteria for good story.<br>
+                                - Tune story generation mechanism.<br>
+                                - Invite 10-30 test user's and collect feedback via questionnaire.<br>
+                                Additionally:<br>
+                                - Add face recognition for user's videos.<br>
+                                - Add scene description to user's videos.<br>
+                                - Enhance Writer to be able to work with various document types.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Ключевые проекты и достижения</strong></td>
+                            <td>
+                                ✅ <u>Прототип семейного архива</u><br>
+                                💪 Набрал команду, настроил сквозной процесс разработки на основе kanban:<br>
+                                💪 Особые достижения продукта:<br>
+                                🔹 Прозрачная асинхронная загрузка и потоковая передача медиафайлов.
+                                🔹 Автоматизированный процесс описания медиа.
+                                🔹 Семантический поиск по медиаобъектам.
+                                🔹 Индивидуальный стиль и дизайн.
+                                🔹 Может быть установлен локально или в любом облаке.
+                                🔹 Ввод комментариев и описаний голосом в реальном времени.<br>
+                                🔹 Автоматическое обнаружение и распознавание лиц на изображениях пользователя. Точность
+                                <strong>~97%</strong>.<br>
+                                На стратегической сессии в конце 2024 года прототип был успешно представлен
+                                инвестору.
+                                Мы пересмотрели наш подход и договорились переключить фокус команды на возможности генерации историй.
+                                Поэтому прототип был заморожен и началась фаза Writer AI Agent.<br>
+                                <br>
+                                ✅ <u>ИИ-агент писатель</u><br>
+                                Работа в процессе, преследует несколько целей:<br>
+                                - Обеспечить автоматическую генерацию историй поверх бэкенда прототипа.
+                                + Добавить разговорные функции для вовлекающего UX<br>
+                                - Определить критерии хорошей истории.<br>
+                                - Настроить механизм генерации историй.<br>
+                                - Привлечь 10-30 тестовых пользователей и собрать отзывы через опросник.<br>
+                                Дополнительно:<br>
+                                - Добавить распознавание лиц для видео пользователей.<br>
+                                - Добавить описание сцен к видео пользователей.<br>
+                                - Улучшить Writer для работы с различными типами документов.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <br>
             <div class="print-unsplittable">
                 <hr>
-                <h3>🔷 QRit (part time)</h3>
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Period</strong></td>
-                        <td>2023.07 - 2024.02</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Role</strong></td>
-                        <td>DevOps</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>About</strong></td>
-                        <td><a href="https://landing.qrit.dev/">QRit</a>
-                            is a platform designed to help restaurants and hospitality businesses offer a seamless,
-                            multilingual, and cashless experience for their customers using QR codes.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Tech stack</strong></td>
-                        <td>
-                            <u>DEV/INFRA</u>:
-                            <code>Github</code> (with actions),
-                            <code>Terraform</code>,
-                            <code>Digital Ocean</code>,
-                            <code>GoDaddy</code>,
-                            <code>Docker</code><br>
+                <div data-lang="en">
+                    <h3>🔷 QRit</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Period</strong></td>
+                            <td>2023.07 - 2024.02</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Role</strong></td>
+                            <td>DevOps</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>About</strong></td>
+                            <td><a href="https://landing.qrit.dev/">QRit</a>
+                                is a platform designed to help restaurants and hospitality businesses offer a seamless,
+                                multilingual, and cashless experience for their customers using QR codes.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                            <td>
+                                <u>DEV/INFRA</u>:
+                                <code>Github</code> (with actions),
+                                <code>Terraform</code>,
+                                <code>Digital Ocean</code>,
+                                <code>GoDaddy</code>,
+                                <code>Docker</code><br>
 
-                            <u>ARCHITECTURE</u>:
-                            <code>NGINX</code>,
-                            <code>Postgres</code>,
-                            <code>Redis</code>,
-                            <code>S3</code><br>
+                                <u>ARCHITECTURE</u>:
+                                <code>NGINX</code>,
+                                <code>Postgres</code>,
+                                <code>Redis</code>,
+                                <code>S3</code><br>
 
-                            <u>DEV</u>:
-                            <code>Figma</code>,
-                            <code>Node</code> + <code>TypeScript</code>,
-                            <code>Next</code> + <code>TypeScript</code>,
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
-                        <td>
-                            - Maintain CI/CD Pipelines.<br>
-                            - Cloud Infrastructure management.<br>
-                            - Database architecture.<br>
-                            - Techical analysis for 3rd party integrations.<br>
-                        </td>
-                    </tr>
-                    <!-- @formatter:off -->
-                <tr><td></td><td><hr></td></tr>
-                <!-- @formatter:on -->
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
-                        <td>
-                            ✅ <u>QRit</u><br>
-                            💪 Set up cloud infrastructure with Terraform + GoDaddy + Digital Ocean.<br>
-                            💪 Configured CI/CD pipelines for TEST, PROD stands.<br>
-                            💪 Provided Database ER model for DEV team.<br>
-                            💪 Provided Streamlit based Admin panel for early stage of product.<br>
-                            💪 Provided Streamlit based Admin panel for early stage of product.<br>
-                        </td>
-                    </tr>
-                </table>
+                                <u>DEV</u>:
+                                <code>Figma</code>,
+                                <code>Node</code> + <code>TypeScript</code>,
+                                <code>Next</code> + <code>TypeScript</code>,
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                            <td>
+                                - Maintain CI/CD Pipelines.<br>
+                                - Cloud Infrastructure management.<br>
+                                - Database architecture.<br>
+                                - Techical analysis for 3rd party integrations.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
+                            <td>
+                                ✅ <u>QRit</u><br>
+                                💪 Set up cloud infrastructure with Terraform + GoDaddy + Digital Ocean.<br>
+                                💪 Configured CI/CD pipelines for TEST, PROD stands.<br>
+                                💪 Provided Database ER model for DEV team.<br>
+                                💪 Provided Streamlit based Admin panel for early stage of product.<br>
+                                💪 Provided Streamlit based Admin panel for early stage of product.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <h3>🔷 QRit</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Период</strong></td>
+                            <td>2023.07 - 2024.02</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Роль</strong></td>
+                            <td>DevOps</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>О проекте</strong></td>
+                            <td><a href="https://landing.qrit.dev/">QRit</a>
+                                - платформа, разработанная для помощи ресторанам и предприятиям индустрии гостеприимства в предоставлении
+                                беспроблемного, многоязычного и безналичного сервиса для клиентов с использованием QR-кодов.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Технологический стек</strong></td>
+                            <td>
+                                <u>DEV/INFRA</u>:
+                                <code>Github</code> (with actions),
+                                <code>Terraform</code>,
+                                <code>Digital Ocean</code>,
+                                <code>GoDaddy</code>,
+                                <code>Docker</code><br>
+
+                                <u>АРХИТЕКТУРА</u>:
+                                <code>NGINX</code>,
+                                <code>Postgres</code>,
+                                <code>Redis</code>,
+                                <code>S3</code><br>
+
+                                <u>РАЗРАБОТКА</u>:
+                                <code>Figma</code>,
+                                <code>Node</code> + <code>TypeScript</code>,
+                                <code>Next</code> + <code>TypeScript</code>,
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Обязанности</strong></td>
+                            <td>
+                                - Поддержка CI/CD пайплайнов.<br>
+                                - Управление облачной инфраструктурой.<br>
+                                - Архитектура базы данных.<br>
+                                - Технический анализ для интеграций с третьими сторонами.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Ключевые проекты и достижения</strong></td>
+                            <td>
+                                ✅ <u>QRit</u><br>
+                                💪 Настроил облачную инфраструктуру с помощью Terraform + GoDaddy + Digital Ocean.<br>
+                                💪 Настроил CI/CD пайплайны для TEST и PROD стендов.<br>
+                                💪 Предоставил ER модель базы данных для команды разработки.<br>
+                                💪 Создал административную панель на основе Streamlit для ранней стадии продукта.<br>
+                                💪 Создал административную панель на основе Streamlit для ранней стадии продукта.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <br>
             </div>
 
             <div class="print-unsplittable">
                 <hr>
+                <div data-lang="en">
+                    <h3>🔷 <a href="https://insitech.dev/">Insitech Development</a></h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Period</strong></td>
+                            <td>2021.05 - 2023.12</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Role</strong></td>
+                            <td>Tech Lead</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>About</strong></td>
+                            <td>Realtalk was established to develop a multiuser software complex that enables
+                                goal-oriented
+                                voice
+                                dialogues across a wide range of scenarios.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                            <td>
+                                <u>DEV/INFRA</u>:
+                                <code>Gitlab</code> (with CI),
+                                <code>Ansible</code>,
+                                <code>Terraform</code>,
+                                <code>Docker Swarm</code><br>
 
-                <h3>🔷 <a href="https://insitech.dev/">Insitech Development</a></h3>
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Period</strong></td>
-                        <td>2021.05 - 2023.12</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Role</strong></td>
-                        <td>Tech Lead</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>About</strong></td>
-                        <td>Realtalk was established to develop a multiuser software complex that enables
-                            goal-oriented
-                            voice
-                            dialogues across a wide range of scenarios.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Tech stack</strong></td>
-                        <td>
-                            <u>DEV/INFRA</u>:
-                            <code>Gitlab</code> (with CI),
-                            <code>Ansible</code>,
-                            <code>Terraform</code>,
-                            <code>Docker Swarm</code><br>
+                                <u>ARCHITECTURE</u>:
+                                <code>Microservices</code>,
+                                <code>SIP</code>,
+                                <code>Yandex Cloud</code>,
+                                <code>NGINX</code>,
+                                <code>Postgres</code>,
+                                <code>Redis</code>,
+                                <br>
 
-                            <u>ARCHITECTURE</u>:
-                            <code>Microservices</code>,
-                            <code>SIP</code>,
-                            <code>Yandex Cloud</code>,
-                            <code>NGINX</code>,
-                            <code>Postgres</code>,
-                            <code>Redis</code>,
-                            <br>
+                                <u>DEV</u>:
+                                <code>Python</code>,
+                                <code>BERT</code> based custom intent detection model,
+                                <code>Vue</code> + <code>TypeScript</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                            <td>
+                                - Interview and hire tech candidates.<br>
+                                - Set up and maintain DEV + delivery process.<br>
+                                - Architecture design.<br>
+                                - Infrastructure management.<br>
+                                - POC of new features.<br>
+                                - Participation in preparations for tenders<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
+                            <td>
+                                ✅ <u><a href="https://en.insitech.dev/realtalk">Realtalk</a> project</u><br>
+                                After my experience in X5 I was invited to lead a small team who was aimed to provide
+                                similar
+                                services to the market.
+                                I had to recompose team for best results: <br>
+                                💪 Reached top competitors convertion rate for NPS/CS collection case in 1 year after
+                                product
+                                development started.<br>
+                                💪 Delivered core component, that handles telephone conversation in realtime with
+                                features:<br>
+                                🔹 Speech Syhthesis / Predefined recordings.<br>
+                                🔹 Detection of multiple intents from peer's utterance.<br>
+                                🔹 Interruption requests handling by bot.<br>
+                                🔹 Dialogue creation framework with web based GUI.<br>
+                                🔹 Scalability. Up to <strong>1M</strong> call attempts per day.<br>
+                                🔹 Improved stability, maintainability and computational efficiency, compared to the
+                                previous
+                                solution.<br>
+                                🔹 Friendly GUI provided for campaign management, reporting and dialogue scenario
+                                creation.<br>
+                                🔹 Digressions handling (FAQ, silence, chitchat attemps, etc..)<br>
+                                💪 Realtalk has been <a
+                                    href="https://reestr.digital.gov.ru/reestr/870268/?sphrase_id=5454194">added</a> to
+                                the official Russian software registry.<br>
+                                🔹 I had to completely redesign technical architecture and delivery process to make the
+                                solution
+                                meet the requirements.<br>
+                                🔹 Achieved higher level of fault-tolerance as a bonus.<br>
+                                💪 Having 50+ cloud servers under control for DEV/TEST/UAT/PROD stands,
+                                I've automated infrastructure management with terraform + ansible<br>
+                                💪 Developed inhouse stands management system to ease delivery process.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <h3>🔷 <a href="https://insitech.dev/">Insitech Development</a></h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Период</strong></td>
+                            <td>2021.05 - 2023.12</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Роль</strong></td>
+                            <td>Технический лидер</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>О проекте</strong></td>
+                            <td>Realtalk был создан для разработки многопользовательского программного комплекса, который обеспечивает
+                                целенаправленные
+                                голосовые
+                                диалоги в широком спектре сценариев.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Технологический стек</strong></td>
+                            <td>
+                                <u>DEV/INFRA</u>:
+                                <code>Gitlab</code> (with CI),
+                                <code>Ansible</code>,
+                                <code>Terraform</code>,
+                                <code>Docker Swarm</code><br>
 
-                            <u>DEV</u>:
-                            <code>Python</code>,
-                            <code>BERT</code> based custom intent detection model,
-                            <code>Vue</code> + <code>TypeScript</code>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
-                        <td>
-                            - Interview and hire tech candidates.<br>
-                            - Set up and maintain DEV + delivery process.<br>
-                            - Architecture design.<br>
-                            - Infrastructure management.<br>
-                            - POC of new features.<br>
-                            - Participation in preparations for tenders<br>
-                        </td>
-                    </tr>
-                    <!-- @formatter:off -->
-                <tr><td></td><td><hr></td></tr>
-                <!-- @formatter:on -->
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
-                        <td>
-                            ✅ <u><a href="https://en.insitech.dev/realtalk">Realtalk</a> project</u><br>
-                            After my experience in X5 I was invited to lead a small team who was aimed to provide
-                            similar
-                            services to the market.
-                            I had to recompose team for best results: <br>
-                            💪 Reached top competitors convertion rate for NPS/CS collection case in 1 year after
-                            product
-                            development started.<br>
-                            💪 Delivered core component, that handles telephone conversation in realtime with
-                            features:<br>
-                            🔹 Speech Syhthesis / Predefined recordings.<br>
-                            🔹 Detection of multiple intents from peer's utterance.<br>
-                            🔹 Interruption requests handling by bot.<br>
-                            🔹 Dialogue creation framework with web based GUI.<br>
-                            🔹 Scalability. Up to <strong>1M</strong> call attempts per day.<br>
-                            🔹 Improved stability, maintainability and computational efficiency, compared to the
-                            previous
-                            solution.<br>
-                            🔹 Friendly GUI provided for campaign management, reporting and dialogue scenario
-                            creation.<br>
-                            🔹 Digressions handling (FAQ, silence, chitchat attemps, etc..)<br>
-                            💪 Realtalk has been <a
-                                href="https://reestr.digital.gov.ru/reestr/870268/?sphrase_id=5454194">added</a> to
-                            the official Russian software registry.<br>
-                            🔹 I had to completely redesign technical architecture and delivery process to make the
-                            solution
-                            meet the requirements.<br>
-                            🔹 Achieved higher level of fault-tolerance as a bonus.<br>
-                            💪 Having 50+ cloud servers under control for DEV/TEST/UAT/PROD stands,
-                            I've automated infrastructure management with terraform + ansible<br>
-                            💪 Developed inhouse stands management system to ease delivery process.<br>
-                        </td>
-                    </tr>
-                </table>
+                                <u>АРХИТЕКТУРА</u>:
+                                <code>Microservices</code>,
+                                <code>SIP</code>,
+                                <code>Yandex Cloud</code>,
+                                <code>NGINX</code>,
+                                <code>Postgres</code>,
+                                <code>Redis</code>,
+                                <br>
+
+                                <u>РАЗРАБОТКА</u>:
+                                <code>Python</code>,
+                                <code>BERT</code> на основе кастомной модели распознавания намерений,
+                                <code>Vue</code> + <code>TypeScript</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Обязанности</strong></td>
+                            <td>
+                                - Проведение интервью и найм технических кандидатов.<br>
+                                - Настройка и поддержка процесса разработки и доставки.<br>
+                                - Проектирование архитектуры.<br>
+                                - Управление инфраструктурой.<br>
+                                - Создание POC новых функций.<br>
+                                - Участие в подготовке к тендерам<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Ключевые проекты и достижения</strong></td>
+                            <td>
+                                ✅ <u>Проект <a href="https://en.insitech.dev/realtalk">Realtalk</a></u><br>
+                                После моего опыта в X5 меня пригласили возглавить небольшую команду, которая была нацелена на предоставление
+                                аналогичных
+                                услуг на рынке.
+                                Мне пришлось пересобрать команду для достижения наилучших результатов: <br>
+                                💪 Достиг уровня конверсии топовых конкурентов для сбора NPS/CS за 1 год после
+                                начала
+                                разработки продукта.<br>
+                                💪 Создал основной компонент, который обрабатывает телефонные разговоры в реальном времени с
+                                возможностями:<br>
+                                🔹 Синтез речи / Предварительно записанные сообщения.<br>
+                                🔹 Обнаружение множественных намерений из высказывания собеседника.<br>
+                                🔹 Обработка запросов на прерывание ботом.<br>
+                                🔹 Фреймворк создания диалогов с веб-интерфейсом.<br>
+                                🔹 Масштабируемость. До <strong>1М</strong> попыток звонков в день.<br>
+                                🔹 Улучшенная стабильность, сопровождаемость и вычислительная эффективность по сравнению с
+                                предыдущим
+                                решением.<br>
+                                🔹 Дружелюбный GUI для управления кампаниями, отчетности и создания сценариев диалога.<br>
+                                🔹 Обработка отступлений (FAQ, тишина, попытки светской беседы и т.д.)<br>
+                                💪 Realtalk был <a
+                                    href="https://reestr.digital.gov.ru/reestr/870268/?sphrase_id=5454194">добавлен</a> в
+                                официальный российский реестр программного обеспечения.<br>
+                                🔹 Мне пришлось полностью переосмыслить техническую архитектуру и процесс доставки, чтобы решение
+                                соответствовало требованиям.<br>
+                                🔹 В качестве бонуса достиг более высокого уровня отказоустойчивости.<br>
+                                💪 Управляя более чем 50 облачными серверами для DEV/TEST/UAT/PROD стендов,
+                                автоматизировал управление инфраструктурой с помощью terraform + ansible<br>
+                                💪 Разработал внутреннюю систему управления стендами для упрощения процесса доставки.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <br>
             </div>
 
 
             <div class="print-unsplittable">
                 <hr>
-                <h3>🔷 X5 Retail Group</h3>
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Period</strong></td>
-                        <td>2017.11 - 2021.04</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Role</strong></td>
-                        <td>Hybrid Role: 50% Tech Lead/Developer, 50% Analyst/PM</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>About</strong></td>
-                        <td><a href="https://www.x5.ru/">X5 Retail Group</a> is Russian leader in grocery retail.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Tech stack</strong></td>
-                        <td>
-                            <u>INFRA</u>:
-                            <code>Gitlab</code> (on-prem installation),
-                            <code>K8S</code> (on-prem installation)
-                            <br>
+                <div data-lang="en">
+                    <h3>🔷 X5 Retail Group</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Period</strong></td>
+                            <td>2017.11 - 2021.04</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Role</strong></td>
+                            <td>Hybrid Role: 50% Tech Lead/Developer, 50% Analyst/PM</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>About</strong></td>
+                            <td><a href="https://www.x5.ru/">X5 Retail Group</a> is Russian leader in grocery retail.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                            <td>
+                                <u>INFRA</u>:
+                                <code>Gitlab</code> (on-prem installation),
+                                <code>K8S</code> (on-prem installation)
+                                <br>
 
-                            <u>DEV/ARCH</u>:
-                            <code>Scala</code>,
-                            <code>SIP</code>,
-                            <code>Python</code>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
-                        <td>
-                            - Participation in product shaping.<br>
-                            - Running POC for internal clients.<br>
-                            - Conducting interviews with tech candidates.<br>
-                            - Develop solution within enterprise arch landscape.<br>
-                        </td>
-                    </tr>
-                    <!-- @formatter:off -->
-                <tr><td></td><td><hr></td></tr>
-                <!-- @formatter:on -->
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
-                        <td>
-                            ✅ <u>RnD in Video Analytics and Speech Technologies</u><br>
-                            💪 In close interaction with the management of the newly formed Big Data department,
-                            participated
-                            in the preparation of a large RnD case. Case being defended consists of two major areas
-                            (Video Analytics and Speech Technologies). I've: <br>
-                            - (1) Initiated this activity and gained support from my chief.<br>
-                            - (2) Prepared business case to be defended on C level of X5 Group.<br>
-                            - (3) Took part in the defense of the case before the company's C-level management.<br>
-                            <br>
-                            Being interested in NLP related activities, I switched my focus to Speech Technologies
-                            completely.<br>
-                            💪 As a developer (later tech lead), developed and implemented a system that
-                            allowed conducting dialogues with retail chain customers over the phone when they
-                            contacted
-                            the
-                            call center.
-                            The entire technology stack was developed and implemented within the organization, with
-                            minimal
-                            involvement of contracting organizations.<br>
-                            💪 Defened inhouse solution to be embedded into Enterprise's arhitecture landscape.<br>
-                            💪 The flagship scenario implemented on the basis of the developed solution was the
-                            registration/replacement of a loyalty card by voice without involving people, with one
-                            of
-                            the
-                            best conversion rates on the market.<br>
-                            (1) ~10000 incoming calls on a daily basis, ~6500 callers asked for loyalty card
-                            registration/replacement.<br>
-                            (2) 70% of inquiries are being solved without redirection to call center.<br>
-                            💪 Developed and implemented a customer support bot in the WhatsApp channel.<br>
-                            💪 Expanded tech team (up to 5 Dev/DevOps/DS positions), ensured the implementation of an
-                            outbound calling system for collecting <a
-                                href="https://en.wikipedia.org/wiki/Net_promoter_score"> NPS</a> +
-                            <a href="https://en.wikipedia.org/wiki/Customer_satisfaction">CS</a>.<br>
-                            💪 Added services responsible for coordinating outbound traffic in accordance with
-                            the organization's contact policies. Solution is able to handle several hundreds
-                            thousands
-                            calls per day.<br>
-                            <br>
-                            ✅ <u>Point of Sale Inventory Management</u><br>
-                            💪 Prepared a data showcase on product stock balances for <a href="https://5ka.ru/">5</a>
-                            subsidiary.
-                            Revealed and identified stocks for several billion of rubles. Ensured smooth knowledge
-                            transfer
-                            to a dedicated team continued with the internal IT product.
-                        </td>
-                    </tr>
-                </table>
+                                <u>DEV/ARCH</u>:
+                                <code>Scala</code>,
+                                <code>SIP</code>,
+                                <code>Python</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                            <td>
+                                - Participation in product shaping.<br>
+                                - Running POC for internal clients.<br>
+                                - Conducting interviews with tech candidates.<br>
+                                - Develop solution within enterprise arch landscape.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
+                            <td>
+                                ✅ <u>RnD in Video Analytics and Speech Technologies</u><br>
+                                💪 In close interaction with the management of the newly formed Big Data department,
+                                participated
+                                in the preparation of a large RnD case. Case being defended consists of two major areas
+                                (Video Analytics and Speech Technologies). I've: <br>
+                                - (1) Initiated this activity and gained support from my chief.<br>
+                                - (2) Prepared business case to be defended on C level of X5 Group.<br>
+                                - (3) Took part in the defense of the case before the company's C-level management.<br>
+                                <br>
+                                Being interested in NLP related activities, I switched my focus to Speech Technologies
+                                completely.<br>
+                                💪 As a developer (later tech lead), developed and implemented a system that
+                                allowed conducting dialogues with retail chain customers over the phone when they
+                                contacted
+                                the
+                                call center.
+                                The entire technology stack was developed and implemented within the organization, with
+                                minimal
+                                involvement of contracting organizations.<br>
+                                💪 Defened inhouse solution to be embedded into Enterprise's arhitecture landscape.<br>
+                                💪 The flagship scenario implemented on the basis of the developed solution was the
+                                registration/replacement of a loyalty card by voice without involving people, with one
+                                of
+                                the
+                                best conversion rates on the market.<br>
+                                (1) ~10000 incoming calls on a daily basis, ~6500 callers asked for loyalty card
+                                registration/replacement.<br>
+                                (2) 70% of inquiries are being solved without redirection to call center.<br>
+                                💪 Developed and implemented a customer support bot in the WhatsApp channel.<br>
+                                💪 Expanded tech team (up to 5 Dev/DevOps/DS positions), ensured the implementation of an
+                                outbound calling system for collecting <a
+                                    href="https://en.wikipedia.org/wiki/Net_promoter_score"> NPS</a> +
+                                <a href="https://en.wikipedia.org/wiki/Customer_satisfaction">CS</a>.<br>
+                                💪 Added services responsible for coordinating outbound traffic in accordance with
+                                the organization's contact policies. Solution is able to handle several hundreds
+                                thousands
+                                calls per day.<br>
+                                <br>
+                                ✅ <u>Point of Sale Inventory Management</u><br>
+                                💪 Prepared a data showcase on product stock balances for <a href="https://5ka.ru/">5</a>
+                                subsidiary.
+                                Revealed and identified stocks for several billion of rubles. Ensured smooth knowledge
+                                transfer
+                                to a dedicated team continued with the internal IT product.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <h3>🔷 X5 Retail Group</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Период</strong></td>
+                            <td>2017.11 - 2021.04</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Роль</strong></td>
+                            <td>Гибридная роль: 50% Тех. лидер/Разработчик, 50% Аналитик/PM</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>О компании</strong></td>
+                            <td><a href="https://www.x5.ru/">X5 Retail Group</a> - российский лидер в сфере продуктового ритейла.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Технологический стек</strong></td>
+                            <td>
+                                <u>ИНФРАСТРУКТУРА</u>:
+                                <code>Gitlab</code> (on-prem установка),
+                                <code>K8S</code> (on-prem установка)
+                                <br>
+
+                                <u>РАЗРАБОТКА/АРХИТЕКТУРА</u>:
+                                <code>Scala</code>,
+                                <code>SIP</code>,
+                                <code>Python</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Обязанности</strong></td>
+                            <td>
+                                - Участие в формировании продукта.<br>
+                                - Проведение POC для внутренних клиентов.<br>
+                                - Проведение интервью с техническими кандидатами.<br>
+                                - Разработка решений в рамках корпоративного архитектурного ландшафта.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Ключевые проекты и достижения</strong></td>
+                            <td>
+                                ✅ <u>R&D в области видеоаналитики и речевых технологий</u><br>
+                                💪 В тесном взаимодействии с руководством новосозданного департамента Big Data участвовал
+                                в подготовке крупного R&D кейса. Защищаемый кейс состоял из двух основных направлений
+                                (Видеоаналитика и Речевые технологии). Я: <br>
+                                - (1) Инициировал эту деятельность и получил поддержку от руководителя.<br>
+                                - (2) Подготовил бизнес-кейс для защиты на C-уровне X5 Group.<br>
+                                - (3) Принял участие в защите кейса перед C-уровнем компании.<br>
+                                <br>
+                                Интересуясь NLP-деятельностью, полностью переключился на речевые технологии.<br>
+                                💪 Как разработчик (позднее тех. лидер), разработал и внедрил систему, которая
+                                позволяла вести диалоги с клиентами торговой сети по телефону при обращении
+                                в
+                                колл-центр.
+                                Весь технологический стек был разработан и внедрен внутри организации с минимальным
+                                привлечением подрядных организаций.<br>
+                                💪 Отстоял внутреннее решение для встраивания в корпоративный архитектурный ландшафт.<br>
+                                💪 Флагманским сценарием, реализованным на основе разработанного решения, была
+                                регистрация/замена карты лояльности голосом без участия людей с одним
+                                из
+                                лучших показателей конверсии на рынке.<br>
+                                (1) ~10000 входящих звонков ежедневно, ~6500 абонентов запрашивали
+                                регистрацию/замену карты лояльности.<br>
+                                (2) 70% обращений решались без переадресации в колл-центр.<br>
+                                💪 Разработал и внедрил бота поддержки клиентов в канале WhatsApp.<br>
+                                💪 Расширил техническую команду (до 5 позиций Dev/DevOps/DS), обеспечил внедрение
+                                системы исходящих звонков для сбора <a
+                                    href="https://en.wikipedia.org/wiki/Net_promoter_score"> NPS</a> +
+                                <a href="https://en.wikipedia.org/wiki/Customer_satisfaction">CS</a>.<br>
+                                💪 Добавил сервисы, отвечающие за координацию исходящего трафика в соответствии с
+                                контактными политиками организации. Решение способно обрабатывать несколько сотен
+                                тысяч
+                                звонков в день.<br>
+                                <br>
+                                ✅ <u>Управление складскими запасами в точках продаж</u><br>
+                                💪 Подготовил витрину данных по остаткам товаров для дочки <a href="https://5ka.ru/">Пятёрочка</a>.
+                                Выявил и идентифицировал запасы на несколько миллиардов рублей. Обеспечил гладкую передачу знаний
+                                выделенной команде, которая продолжила работу с внутренним IT-продуктом.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <br>
             </div>
             <!--        <div class="print-unsplittable">-->
@@ -655,221 +1198,430 @@
 
             <div class="print-unsplittable">
                 <hr>
-                <h3>🔷 Beeline (Big Data Department)</h3>
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Period</strong></td>
-                        <td>2015.09 - 2017.04</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Role</strong></td>
-                        <td>Hybrid Role: 50% Dev/DS, 50% PM/Analyst</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>About</strong></td>
-                        <td><a href="https://moskva.beeline.ru/">Beeline</a> is a well known russian federal level
-                            digital
-                            provider.
-                            Company owns an industrial Hadoop cluster with petabytes of
-                            varying-quality data. The division was focused on delivering business value using
-                            open-source
-                            on-premise Big Data infrastructure.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Tech stack</strong></td>
-                        <td>
-                            <u>DEV/ARCH</u>:
-                            <code>Hadoop</code>,
-                            <code>SPARK</code>,
-                            <code>SQL</code>,
-                            <code>Python</code>,
-                            <code>Java</code>,
-                            <code>Shell</code>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
-                        <td>
-                            - Conduct division's activities.<br>
-                            - Implement ML based solutions.<br>
-                            - Adopt best practices in Project/Product workflow delivery process.<br>
-                            - Integrate advanced technologies into daily operations.<br>
-                        </td>
-                    </tr>
-                    <!-- @formatter:off -->
-                <tr><td></td><td><hr></td></tr>
-                <!-- @formatter:on -->
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
-                        <td>
-                            ✅ <u>Division's workflow reorganization</u><br>
-                            💪 <strong>Manager</strong>: Identification and analysis of current business processes to
-                            find
-                            inefficiencies.<br>
-                            💪 <strong>Manager</strong>: Adopting agile practices to ongoing activities with the
-                            support
-                            of
-                            specialists from the headquarters in Amsterdam.<br>
-                            <br>
-                            ✅ <u>Client's gender identification. Reached 85+% accuracy</u><br>
-                            💪 <strong>Analyst/DS</strong>: Identified the most influential predictive features.
-                            Prepared
-                            Specifications for ETL process.<br>
-                            💪 <strong>DS</strong>: Trained logit model for gender prediction using SPARK.<br>
-                            💪 <strong>Manager</strong>: With the help of a contractor, implemented and automated ETL
-                            for
-                            generating input data to the model.<br>
-                            💪 Here I was first in the Big Data department who delivered production-grade SPARK-based
-                            solution.<br>
-                            <br>
-                            ✅ <u>Churn prediction</u><br>
-                            💪 <strong>Data Engineer</strong>: Implemented SPARK based ETL pipeline that generates
-                            features
-                            for churn detection model.<br>
-                            <br>
-                            ✅ <u>Customer's golden record</u><br>
-                            💪 <strong>Manager</strong>: With contractor's help, delivered daily ETL process that
-                            collects
-                            various information about Beeline's customers.<br>
-                        </td>
-                    </tr>
-                </table>
+                <div data-lang="en">
+                    <h3>🔷 Beeline (Big Data Department)</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Period</strong></td>
+                            <td>2015.09 - 2017.04</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Role</strong></td>
+                            <td>Hybrid Role: 50% Dev/DS, 50% PM/Analyst</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>About</strong></td>
+                            <td><a href="https://moskva.beeline.ru/">Beeline</a> is a well known russian federal level
+                                digital
+                                provider.
+                                Company owns an industrial Hadoop cluster with petabytes of
+                                varying-quality data. The division was focused on delivering business value using
+                                open-source
+                                on-premise Big Data infrastructure.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                            <td>
+                                <u>DEV/ARCH</u>:
+                                <code>Hadoop</code>,
+                                <code>SPARK</code>,
+                                <code>SQL</code>,
+                                <code>Python</code>,
+                                <code>Java</code>,
+                                <code>Shell</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                            <td>
+                                - Conduct division's activities.<br>
+                                - Implement ML based solutions.<br>
+                                - Adopt best practices in Project/Product workflow delivery process.<br>
+                                - Integrate advanced technologies into daily operations.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
+                            <td>
+                                ✅ <u>Division's workflow reorganization</u><br>
+                                💪 <strong>Manager</strong>: Identification and analysis of current business processes to
+                                find
+                                inefficiencies.<br>
+                                💪 <strong>Manager</strong>: Adopting agile practices to ongoing activities with the
+                                support
+                                of
+                                specialists from the headquarters in Amsterdam.<br>
+                                <br>
+                                ✅ <u>Client's gender identification. Reached 85+% accuracy</u><br>
+                                💪 <strong>Analyst/DS</strong>: Identified the most influential predictive features.
+                                Prepared
+                                Specifications for ETL process.<br>
+                                💪 <strong>DS</strong>: Trained logit model for gender prediction using SPARK.<br>
+                                💪 <strong>Manager</strong>: With the help of a contractor, implemented and automated ETL
+                                for
+                                generating input data to the model.<br>
+                                💪 Here I was first in the Big Data department who delivered production-grade SPARK-based
+                                solution.<br>
+                                <br>
+                                ✅ <u>Churn prediction</u><br>
+                                💪 <strong>Data Engineer</strong>: Implemented SPARK based ETL pipeline that generates
+                                features
+                                for churn detection model.<br>
+                                <br>
+                                ✅ <u>Customer's golden record</u><br>
+                                💪 <strong>Manager</strong>: With contractor's help, delivered daily ETL process that
+                                collects
+                                various information about Beeline's customers.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <h3>🔷 Билайн (Департамент Big Data)</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Период</strong></td>
+                            <td>2015.09 - 2017.04</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Роль</strong></td>
+                            <td>Гибридная роль: 50% Dev/DS, 50% PM/Аналитик</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>О компании</strong></td>
+                            <td><a href="https://moskva.beeline.ru/">Билайн</a> - известный российский федеральный
+                                цифровой
+                                провайдер.
+                                Компания владеет промышленным Hadoop кластером с петабайтами
+                                данных разного качества. Подразделение было сосредоточено на извлечении бизнес-ценности с использованием
+                                open-source
+                                on-premise инфраструктуры Big Data.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Технологический стек</strong></td>
+                            <td>
+                                <u>РАЗРАБОТКА/АРХИТЕКТУРА</u>:
+                                <code>Hadoop</code>,
+                                <code>SPARK</code>,
+                                <code>SQL</code>,
+                                <code>Python</code>,
+                                <code>Java</code>,
+                                <code>Shell</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Обязанности</strong></td>
+                            <td>
+                                - Ведение деятельности подразделения.<br>
+                                - Внедрение ML-решений.<br>
+                                - Внедрение лучших практик в процесс доставки проектов/продуктов.<br>
+                                - Интеграция передовых технологий в ежедневные операции.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Ключевые проекты и достижения</strong></td>
+                            <td>
+                                ✅ <u>Реорганизация рабочего процесса подразделения</u><br>
+                                💪 <strong>Менеджер</strong>: Выявление и анализ текущих бизнес-процессов для поиска
+                                неэффективности.<br>
+                                💪 <strong>Менеджер</strong>: Внедрение agile практик в текущую деятельность при поддержке
+                                специалистов
+                                из
+                                штаб-квартиры в Амстердаме.<br>
+                                <br>
+                                ✅ <u>Определение пола клиентов. Достигнута точность 85+%</u><br>
+                                💪 <strong>Аналитик/DS</strong>: Определил наиболее влиятельные предикторы.
+                                Подготовил
+                                спецификации для ETL процесса.<br>
+                                💪 <strong>DS</strong>: Обучил logit модель для предсказания пола с использованием SPARK.<br>
+                                💪 <strong>Менеджер</strong>: С помощью подрядчика внедрил и автоматизировал ETL
+                                для
+                                генерации входных данных для модели.<br>
+                                💪 Здесь я был первым в департаменте Big Data, кто поставил production-ready решение на основе SPARK.<br>
+                                <br>
+                                ✅ <u>Предсказание оттока</u><br>
+                                💪 <strong>Data Engineer</strong>: Внедрил ETL пайплайн на основе SPARK, который генерирует
+                                признаки
+                                для модели обнаружения оттока.<br>
+                                <br>
+                                ✅ <u>Золотая запись клиента</u><br>
+                                💪 <strong>Менеджер</strong>: С помощью подрядчика поставил ежедневный ETL процесс, который
+                                собирает
+                                разнообразную информацию о клиентах Билайн.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <br>
             </div>
             <div class="print-unsplittable">
                 <hr>
-                <h3>🔷 Accenture</h3>
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Period</strong></td>
-                        <td>2012.03 - 2015.08</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Role</strong></td>
-                        <td>Hybrid Role: 70% Dev/DevOps, 30% analysis (requirements, validation)</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>About</strong></td>
-                        <td>Global IT consulting leader. <a href="https://www.accenture.com/">website</a> .
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Tech stack</strong></td>
-                        <td>
-                            <u>DEV</u>:
-                            <code>Python</code>,
-                            <code>Java</code>,
-                            <code>Shell</code>,
-                            <code>SQL</code>,
-                            <code>Informatica</code>,
-                            <code>Teradata</code>,
-                            <code>Hadoop</code>,
-                            <code>Anylogic</code>,
-                            <code>Photoscan</code>,
-                            <code>Linux</code>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
-                        <td>
-                            - Deliver modeling, analytics, and data processing pipelines.<br>
-                            - Provide scalable, fault-tolerant solutions. Ensure integration of diverse
-                            components.<br>
-                            - Participate in internal R&D and customer-facing projects.<br>
-                            - Prepare documentation and specs.<br>
-                        </td>
-                    </tr>
-                    <!-- @formatter:off -->
-<tr><td></td><td><hr></td></tr>
-<!-- @formatter:on -->
-
-
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
-                        <td>
-                            ✅ <u>Automated Infrastructure Inspection via Drones (R&D Initiative)</u><br>
-                            💪 <strong>Client Engagement</strong>: Conducted on-site requirements gathering with
-                            energy
-                            sector clients. Coordinated drone flight operations with 3rd-party partners
-                            (aircraft-type
-                            UAVs,
-                            1000km range)<br>
-                            💪 <strong>DevOps</strong>: Managed aerial imagery processing pipeline (Photoscan,
-                            Linux).
-                            Worked
-                            with CV engineers to deploy algorithms detecting infrastructure defects. <br>
-                            <br>
-                            ✅ <u>Social Media Lead Generation (Top Russian Bank)</u><br>
-                            💪 <strong>Developer</strong>: Crawled 50+MLN <a
-                                href="https://en.wikipedia.org/wiki/VK_(service)">VK</a> users with their core
-                            attrubites
-                            and custom
-                            features representing their ability to influence<br>
-                            💪 <strong>DevOps</strong>: Built 10-node Hadoop cluster to process crawled data.<br>
-                            <br>
-                            ✅ <u>E-Commerce Warehouse Simulation</u><br>
-                            💪 <strong>Analyst/Developer</strong>: In collabortaion with retail experts designed and
-                            implemented Anylogic model that cut order assembly time by 30%.<br>
-                            <br>
-                            ✅ <u>Risk Data Mart for Banking Reserves</u><br>
-                            💪 <strong>Analyst</strong>: Collection and clarification of requirements.<br>
-                            💪 <strong>Developer</strong>: Implementation of ETL process with Informatica + Teradata.
-                        </td>
-                    </tr>
-                </table>
+                <div data-lang="en">
+                    <h3>🔷 Accenture</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Period</strong></td>
+                            <td>2012.03 - 2015.08</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Role</strong></td>
+                            <td>Hybrid Role: 70% Dev/DevOps, 30% analysis (requirements, validation)</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>About</strong></td>
+                            <td>Global IT consulting leader. <a href="https://www.accenture.com/">website</a> .
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                            <td>
+                                <u>DEV</u>:
+                                <code>Python</code>,
+                                <code>Java</code>,
+                                <code>Shell</code>,
+                                <code>SQL</code>,
+                                <code>Informatica</code>,
+                                <code>Teradata</code>,
+                                <code>Hadoop</code>,
+                                <code>Anylogic</code>,
+                                <code>Photoscan</code>,
+                                <code>Linux</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                            <td>
+                                - Deliver modeling, analytics, and data processing pipelines.<br>
+                                - Provide scalable, fault-tolerant solutions. Ensure integration of diverse
+                                components.<br>
+                                - Participate in internal R&D and customer-facing projects.<br>
+                                - Prepare documentation and specs.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
+                            <td>
+                                ✅ <u>Automated Infrastructure Inspection via Drones (R&D Initiative)</u><br>
+                                💪 <strong>Client Engagement</strong>: Conducted on-site requirements gathering with
+                                energy
+                                sector clients. Coordinated drone flight operations with 3rd-party partners
+                                (aircraft-type
+                                UAVs,
+                                1000km range)<br>
+                                💪 <strong>DevOps</strong>: Managed aerial imagery processing pipeline (Photoscan,
+                                Linux).
+                                Worked
+                                with CV engineers to deploy algorithms detecting infrastructure defects. <br>
+                                <br>
+                                ✅ <u>Social Media Lead Generation (Top Russian Bank)</u><br>
+                                💪 <strong>Developer</strong>: Crawled 50+MLN <a
+                                    href="https://en.wikipedia.org/wiki/VK_(service)">VK</a> users with their core
+                                attrubites
+                                and custom
+                                features representing their ability to influence<br>
+                                💪 <strong>DevOps</strong>: Built 10-node Hadoop cluster to process crawled data.<br>
+                                <br>
+                                ✅ <u>E-Commerce Warehouse Simulation</u><br>
+                                💪 <strong>Analyst/Developer</strong>: In collabortaion with retail experts designed and
+                                implemented Anylogic model that cut order assembly time by 30%.<br>
+                                <br>
+                                ✅ <u>Risk Data Mart for Banking Reserves</u><br>
+                                💪 <strong>Analyst</strong>: Collection and clarification of requirements.<br>
+                                💪 <strong>Developer</strong>: Implementation of ETL process with Informatica + Teradata.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <h3>🔷 Accenture</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Период</strong></td>
+                            <td>2012.03 - 2015.08</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Роль</strong></td>
+                            <td>Гибридная роль: 70% Dev/DevOps, 30% анализ (требования, валидация)</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>О компании</strong></td>
+                            <td>Мировой лидер в области IT-консалтинга. <a href="https://www.accenture.com/">сайт</a> .
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Технологический стек</strong></td>
+                            <td>
+                                <u>РАЗРАБОТКА</u>:
+                                <code>Python</code>,
+                                <code>Java</code>,
+                                <code>Shell</code>,
+                                <code>SQL</code>,
+                                <code>Informatica</code>,
+                                <code>Teradata</code>,
+                                <code>Hadoop</code>,
+                                <code>Anylogic</code>,
+                                <code>Photoscan</code>,
+                                <code>Linux</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Обязанности</strong></td>
+                            <td>
+                                - Поставка моделирования, аналитики и пайплайнов обработки данных.<br>
+                                - Предоставление масштабируемых, отказоустойчивых решений. Обеспечение интеграции разнообразных
+                                компонентов.<br>
+                                - Участие во внутренних R&D и клиентских проектах.<br>
+                                - Подготовка документации и спецификаций.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Ключевые проекты и достижения</strong></td>
+                            <td>
+                                ✅ <u>Автоматизированная инспекция инфраструктуры с помощью дронов (R&D инициатива)</u><br>
+                                💪 <strong>Работа с клиентами</strong>: Проводил сбор требований на площадках клиентов из
+                                энергетического
+                                сектора. Координировал операции полетов дронов с партнерами
+                                (самолетного типа
+                                БПЛА,
+                                дальность 1000км)<br>
+                                💪 <strong>DevOps</strong>: Управлял пайплайном обработки аэрофотосъемки (Photoscan,
+                                Linux).
+                                Работал
+                                с CV инженерами для развертывания алгоритмов обнаружения дефектов инфраструктуры. <br>
+                                <br>
+                                ✅ <u>Генерация лидов в социальных сетях (Топовый российский банк)</u><br>
+                                💪 <strong>Разработчик</strong>: Собрал данные 50+млн пользователей <a
+                                    href="https://en.wikipedia.org/wiki/VK_(service)">ВКонтакте</a> с их основными
+                                атрибутами
+                                и кастомными
+                                признаками, отражающими их способность влиять<br>
+                                💪 <strong>DevOps</strong>: Построил 10-узловой Hadoop кластер для обработки собранных данных.<br>
+                                <br>
+                                ✅ <u>Симуляция складского хозяйства E-Commerce</u><br>
+                                💪 <strong>Аналитик/Разработчик</strong>: В сотрудничестве с ритейл экспертами спроектировал и
+                                внедрил Anylogic модель, которая сократила время сборки заказов на 30%.<br>
+                                <br>
+                                ✅ <u>Витрина данных рисков для банковских резервов</u><br>
+                                💪 <strong>Аналитик</strong>: Сбор и уточнение требований.<br>
+                                💪 <strong>Разработчик</strong>: Реализация ETL процесса с Informatica + Teradata.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <br>
             </div>
             <div class="print-unsplittable">
                 <hr>
-
-                <h3>🔷 Luxoft</h3>
-                <table>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Period</strong></td>
-                        <td>2009.11 - 2012.02</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Role</strong></td>
-                        <td>Junior Developer</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>About</strong></td>
-                        <td><a href="https://www.luxoft.com/">Luxoft</a> is a multinational technology company
-                            providing
-                            software development services and IT solutions.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Tech stack</strong></td>
-                        <td>
-                            <u>DEV</u>:
-                            <code>C</code>,
-                            <code>Java</code>,
-                            <code>Shell</code>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
-                        <td>
-                            - Participate in agile rutuals (Scrum, Planning, Grooming, etc..).<br>
-                            - Write tests, create and review code. Bug fixing.<br>
-                        </td>
-                    </tr>
-                    <!-- @formatter:off -->
-<tr><td></td><td><hr></td></tr>
-<!-- @formatter:on -->
-
-                    <tr>
-                        <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
-                        <td>
-                            ✅ <u>ZigBee stack implementation for semiconductor manufacturers</u><br>
-                            💪 Consolidated knowledge in C, Java.<br>
-                            💪 Created ZigBee protocol stack simulator, accelerating test cycles.<br>
-                            💪 Gained low-level programming experience working with boards/microcontrollers.<br>
-                        </td>
-                    </tr>
-                </table>
+                <div data-lang="en">
+                    <h3>🔷 Luxoft</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Period</strong></td>
+                            <td>2009.11 - 2012.02</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Role</strong></td>
+                            <td>Junior Developer</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>About</strong></td>
+                            <td><a href="https://www.luxoft.com/">Luxoft</a> is a multinational technology company
+                                providing
+                                software development services and IT solutions.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Tech stack</strong></td>
+                            <td>
+                                <u>DEV</u>:
+                                <code>C</code>,
+                                <code>Java</code>,
+                                <code>Shell</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Responsibilities</strong></td>
+                            <td>
+                                - Participate in agile rutuals (Scrum, Planning, Grooming, etc..).<br>
+                                - Write tests, create and review code. Bug fixing.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Key Projects & Achievements</strong></td>
+                            <td>
+                                ✅ <u>ZigBee stack implementation for semiconductor manufacturers</u><br>
+                                💪 Consolidated knowledge in C, Java.<br>
+                                💪 Created ZigBee protocol stack simulator, accelerating test cycles.<br>
+                                💪 Gained low-level programming experience working with boards/microcontrollers.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-lang="ru" style="display: none;">
+                    <h3>🔷 Luxoft</h3>
+                    <table>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Период</strong></td>
+                            <td>2009.11 - 2012.02</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Роль</strong></td>
+                            <td>Младший разработчик</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>О компании</strong></td>
+                            <td><a href="https://www.luxoft.com/">Luxoft</a> - международная технологическая компания,
+                                предоставляющая
+                                услуги разработки программного обеспечения и IT-решения.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Технологический стек</strong></td>
+                            <td>
+                                <u>РАЗРАБОТКА</u>:
+                                <code>C</code>,
+                                <code>Java</code>,
+                                <code>Shell</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Обязанности</strong></td>
+                            <td>
+                                - Участие в agile ритуалах (Scrum, Planning, Grooming и т.д.).<br>
+                                - Написание тестов, создание и ревью кода. Исправление багов.<br>
+                            </td>
+                        </tr>
+                        <!-- @formatter:off -->
+                        <tr><td></td><td><hr></td></tr>
+                        <!-- @formatter:on -->
+                        <tr>
+                            <td style="vertical-align: top;"><strong>Ключевые проекты и достижения</strong></td>
+                            <td>
+                                ✅ <u>Реализация ZigBee стека для производителей полупроводников</u><br>
+                                💪 Укрепил знания в C, Java.<br>
+                                💪 Создал симулятор протокольного стека ZigBee, ускорив циклы тестирования.<br>
+                                💪 Получил опыт низкоуровнего программирования при работе с платами/микроконтроллерами.<br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <br>
             </div>
         </div>
@@ -877,49 +1629,99 @@
         <div class="print-unsplittable">
             <hr>
             <hr>
-            <h2>🎓 Education</h2>
-            <h3>Higher</h3>
-            <p>
-                <a href="https://www.hse.ru/">Higher School of Economics</a>, Department of Sociology,
-                specialization
-                "Analysis of Social Institutions". 2010, Bachelor.
+            <div data-lang="en">
+                <h2>🎓 Education</h2>
+                <h3>Higher</h3>
+                <p>
+                    <a href="https://www.hse.ru/">Higher School of Economics</a>, Department of Sociology,
+                    specialization
+                    "Analysis of Social Institutions". 2010, Bachelor.
+                    <br>
+                    Defended a graduation thesis on the topic "Constructing the Mechanism of Trust towards Machines as
+                    Subjects
+                    of
+                    Social Relations".
+                </p>
                 <br>
-                Defended a graduation thesis on the topic "Constructing the Mechanism of Trust towards Machines as
-                Subjects
-                of
-                Social Relations".
-            </p>
-            <br>
-            <h3>Additional</h3>
-            <ul>
-                <li>In 2024.10. Kubernetes - Complete Course on Kubernetes. <a
-                        href="https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/">Certificate
-                    Link</a>
-                </li>
-                <li>In 2018. Training at Skolkovo. <a
-                        href="https://courses.skolkovo.ru/event/courses/business-transformation/">Трансформация и
-                    рост
-                    бизнеса в эпоху новых технологий</a> (Business Transformation and Growth in the Age of New
-                    Technologies)
-                </li>
-                <li>In 2016. Beeline Data School (9 month course with wide range of ML related topics). Beeline.
-                </li>
-                <li>In 2016. (1) Agile SW development, (2) Requirement Management in Agile projects. <a
-                        href="https://scrumtrek.ru/">ScrumTrek</a>
-                </li>
-                <li>In 2013. <a
-                        href="https://professional.mit.edu/course-catalog/design-thinking-and-innovation-technical-leaders">Mastering
-                    Innovation & Design Thinking</a>. MIT.
-                </li>
-                <strong>Cloudera</strong>:
-                <li>In 2013. Introduction to Data Science: Building Recommender Systems. Cloudera.</li>
-                <li>In 2013. Cloudera Certified Specialist in Apache Hbase. Cloudera.</li>
-                <li>In 2012. Cloudera Certified Developer For Apache Hadoop. Cloudera.</li>
-                <li>In 2012. Cloudera Certified Administrator for Apache Hadoop. Cloudera.</li>
-                <strong>Basic</strong>:
-                <li>In 2010. Java, Java EE. "Specialist" at Bauman Moscow State Technical University.</li>
-                <li>In 2009. Visual C/C++. "Specialist" at Bauman Moscow State Technical University.</li>
-            </ul>
+                <h3>Additional</h3>
+            </div>
+            <div data-lang="ru" style="display: none;">
+                <h2>🎓 Образование</h2>
+                <h3>Высшее</h3>
+                <p>
+                    <a href="https://www.hse.ru/">Высшая школа экономики</a>, Факультет социологии,
+                    специализация
+                    "Анализ социальных институтов". 2010, Бакалавр.
+                    <br>
+                    Защитил дипломную работу на тему "Конструирование механизма доверия к машинам как
+                    субъектам
+                    социальных отношений".
+                </p>
+                <br>
+                <h3>Дополнительное</h3>
+            </div>
+            <div data-lang="en">
+                <ul>
+                    <li>In 2024.10. Kubernetes - Complete Course on Kubernetes. <a
+                            href="https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/">Certificate
+                        Link</a>
+                    </li>
+                    <li>In 2018. Training at Skolkovo. <a
+                            href="https://courses.skolkovo.ru/event/courses/business-transformation/">Трансформация и
+                        рост
+                        бизнеса в эпоху новых технологий</a> (Business Transformation and Growth in the Age of New
+                        Technologies)
+                    </li>
+                    <li>In 2016. Beeline Data School (9 month course with wide range of ML related topics). Beeline.
+                    </li>
+                    <li>In 2016. (1) Agile SW development, (2) Requirement Management in Agile projects. <a
+                            href="https://scrumtrek.ru/">ScrumTrek</a>
+                    </li>
+                    <li>In 2013. <a
+                            href="https://professional.mit.edu/course-catalog/design-thinking-and-innovation-technical-leaders">Mastering
+                        Innovation & Design Thinking</a>. MIT.
+                    </li>
+                    <strong>Cloudera</strong>:
+                    <li>In 2013. Introduction to Data Science: Building Recommender Systems. Cloudera.</li>
+                    <li>In 2013. Cloudera Certified Specialist in Apache Hbase. Cloudera.</li>
+                    <li>In 2012. Cloudera Certified Developer For Apache Hadoop. Cloudera.</li>
+                    <li>In 2012. Cloudera Certified Administrator for Apache Hadoop. Cloudera.</li>
+                    <strong>Basic</strong>:
+                    <li>In 2010. Java, Java EE. "Specialist" at Bauman Moscow State Technical University.</li>
+                    <li>In 2009. Visual C/C++. "Specialist" at Bauman Moscow State Technical University.</li>
+                </ul>
+            </div>
+            <div data-lang="ru" style="display: none;">
+                <ul>
+                    <li>В 2024.10. Kubernetes - Полный курс по Kubernetes. <a
+                            href="https://www.udemy.com/certificate/UC-e41f5290-2d5a-4e8c-99e0-89e30e3436db/">Ссылка на
+                        сертификат</a>
+                    </li>
+                    <li>В 2018. Обучение в Сколково. <a
+                            href="https://courses.skolkovo.ru/event/courses/business-transformation/">Трансформация и
+                        рост
+                        бизнеса в эпоху новых технологий</a> (Business Transformation and Growth in the Age of New
+                        Technologies)
+                    </li>
+                    <li>В 2016. Школа данных Билайн (9-месячный курс с широким спектром тем, связанных с ML). Билайн.
+                    </li>
+                    <li>В 2016. (1) Agile разработка ПО, (2) Управление требованиями в Agile проектах. <a
+                            href="https://scrumtrek.ru/">ScrumTrek</a>
+                    </li>
+                    <li>В 2013. <a
+                            href="https://professional.mit.edu/course-catalog/design-thinking-and-innovation-technical-leaders">Mastering
+                        Innovation & Design Thinking</a>. MIT.
+                    </li>
+                    <strong>Cloudera</strong>:
+                    <li>В 2013. Introduction to Data Science: Building Recommender Systems. Cloudera.</li>
+                    <li>В 2013. Cloudera Certified Specialist in Apache Hbase. Cloudera.</li>
+                    <li>В 2012. Cloudera Certified Developer For Apache Hadoop. Cloudera.</li>
+                    <li>В 2012. Cloudera Certified Administrator for Apache Hadoop. Cloudera.</li>
+                    <strong>Базовые</strong>:
+                    <li>В 2010. Java, Java EE. "Специалист" при МГТУ имени Баумана.</li>
+                    <li>В 2009. Visual C/C++. "Специалист" при МГТУ имени Баумана.</li>
+                </ul>
+            </div>
         </div>
     </div>
 

@@ -18,4 +18,4 @@ https://vvpreo.github.io/?lang=en
 https://vvpreo.github.io/?lang=ru
 
 # Deployment
-This is a sigle page deployed on github pages. NO BACKEND
+This is a single page deployed on github pages. NO BACKEND
