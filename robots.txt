@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+# Sitemap: https://vvpreo.github.io/sitemap.xml
+
+# Main pages
+# English version
+# https://vvpreo.github.io/?lang=en
+
+# Russian version
+# https://vvpreo.github.io/?lang=ru
+
+# Auto-detect version (default)
+# https://vvpreo.github.io/
