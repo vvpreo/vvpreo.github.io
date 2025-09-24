@@ -155,32 +155,278 @@
     <!-- Extended Google Analytics tracking for resume interactions -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Track contact clicks
-            document.querySelectorAll('.contacts-table a').forEach(function(link) {
-                link.addEventListener('click', function() {
-                    const contactType = this.querySelector('img').alt;
-                    gtag('event', 'contact_click', {
-                        'contact_type': contactType,
-                        'event_category': 'engagement',
-                        'event_label': 'Contact Information',
-                        'contact_url': this.href
+            // === COMPREHENSIVE LINK TRACKING SYSTEM ===
+
+            // Define link categories
+            const linkCategories = {
+                'contact': ['mailto:', 't.me', 'linkedin.com'],
+                'portfolio': ['github.com', 'landing.qrit.dev', 'insitech.dev'],
+                'company': ['x5.ru', '5ka.ru', 'beeline.ru', 'accenture.com', 'luxoft.com'],
+                'education': ['hse.ru', 'skolkovo.ru', 'mit.edu', 'udemy.com', 'scrumtrek.ru'],
+                'achievement': ['rasa.com', 'reestr.digital.gov.ru'],
+                'reference': ['wikipedia.org'],
+                'media': ['youtube.com', 'youtu.be'],
+                'certificate': ['udemy.com/certificate']
+            };
+
+            // Helper functions
+            function isExternalLink(link) {
+                try {
+                    const linkDomain = new URL(link.href).hostname;
+                    const currentDomain = window.location.hostname;
+                    return linkDomain !== currentDomain && 
+                           !link.href.includes('analytics.google.com') && 
+                           !link.href.includes('googletagmanager.com');
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function categorizeLink(url) {
+                const urlLower = url.toLowerCase();
+                for (const [category, domains] of Object.entries(linkCategories)) {
+                    if (domains.some(domain => urlLower.includes(domain))) {
+                        return category;
+                    }
+                }
+                return 'other';
+            }
+
+            function getFileExtension(url) {
+                const pathname = new URL(url).pathname;
+                const extension = pathname.split('.').pop();
+                return extension.length <= 4 ? extension : 'unknown';
+            }
+
+            function getFileName(url) {
+                const pathname = new URL(url).pathname;
+                return pathname.split('/').pop() || 'unknown';
+            }
+
+            function detectSocialPlatform(url) {
+                const urlLower = url.toLowerCase();
+                if (urlLower.includes('linkedin.com')) return 'linkedin';
+                if (urlLower.includes('github.com')) return 'github';
+                if (urlLower.includes('t.me')) return 'telegram';
+                if (urlLower.includes('youtube.com') || urlLower.includes('youtu.be')) return 'youtube';
+                return 'unknown';
+            }
+
+            function findParentSection(element) {
+                const section = element.closest('[data-section]');
+                return section ? section.getAttribute('data-section') : 'unknown';
+            }
+
+            function getSurroundingText(element, maxLength = 50) {
+                const parent = element.parentElement;
+                if (!parent) return '';
+
+                const text = parent.textContent.trim();
+                const elementText = element.textContent.trim();
+                const index = text.indexOf(elementText);
+
+                if (index === -1) return text.substring(0, maxLength);
+
+                const start = Math.max(0, index - maxLength / 2);
+                const end = Math.min(text.length, index + elementText.length + maxLength / 2);
+
+                return text.substring(start, end).trim();
+            }
+
+            function getLinkPosition(element) {
+                const allLinks = Array.from(document.querySelectorAll('a'));
+                return allLinks.indexOf(element) + 1;
+            }
+
+            function getClickContext(element) {
+                return {
+                    'section_name': findParentSection(element),
+                    'link_position': getLinkPosition(element),
+                    'surrounding_text': getSurroundingText(element),
+                    'is_in_table': element.closest('table') !== null,
+                    'is_in_list': element.closest('ul, ol') !== null,
+                    'has_image': element.querySelector('img') !== null,
+                    'parent_tag': element.parentElement ? element.parentElement.tagName.toLowerCase() : 'unknown'
+                };
+            }
+
+            function trackUserIntent(linkCategory, linkText, linkUrl) {
+                const intentMap = {
+                    'github.com': 'view_code',
+                    'linkedin.com': 'professional_network',
+                    'certificate': 'verify_qualification',
+                    'company': 'learn_about_employer',
+                    'achievement': 'verify_achievement',
+                    'portfolio': 'explore_projects',
+                    'education': 'check_credentials',
+                    'contact': 'initiate_contact',
+                    'media': 'view_content'
+                };
+
+                let intent = intentMap[linkCategory] || 'general_interest';
+
+                // More specific intent detection
+                if (linkUrl.includes('certificate')) intent = 'verify_qualification';
+                if (linkUrl.includes('rasa.com')) intent = 'verify_achievement';
+                if (linkText.toLowerCase().includes('won') || linkText.toLowerCase().includes('challenge')) intent = 'verify_achievement';
+
+                gtag('event', 'user_intent', {
+                    'intent_type': intent,
+                    'target_content': linkText,
+                    'link_category': linkCategory,
+                    'language': currentLanguage,
+                    'event_category': 'behavior',
+                    'event_label': 'User Intent Analysis'
+                });
+            }
+
+            // Main link tracking function
+            function trackLinkClick(element, category, customData = {}) {
+                const linkText = element.textContent.trim();
+                const linkUrl = element.href;
+                const linkDomain = new URL(linkUrl).hostname;
+                const context = getClickContext(element);
+
+                // Base event data
+                const eventData = {
+                    'link_category': category,
+                    'link_url': linkUrl,
+                    'link_text': linkText,
+                    'link_domain': linkDomain,
+                    'page_section': context.section_name,
+                    'language': currentLanguage,
+                    'event_category': 'navigation',
+                    'event_label': category + '_link',
+                    'link_position': context.link_position,
+                    'surrounding_text': context.surrounding_text,
+                    'is_in_table': context.is_in_table,
+                    'is_in_list': context.is_in_list,
+                    'has_image': context.has_image,
+                    'parent_tag': context.parent_tag,
+                    ...customData
+                };
+
+                // Send main tracking event
+                gtag('event', 'external_link_click', eventData);
+
+                // Track user intent
+                trackUserIntent(category, linkText, linkUrl);
+            }
+
+            // Special handlers for different link types
+            function trackEmailClick(element) {
+                const emailAddress = element.href.replace('mailto:', '');
+
+                gtag('event', 'contact_email_click', {
+                    'contact_method': 'email',
+                    'email_address': emailAddress,
+                    'page_section': findParentSection(element),
+                    'language': currentLanguage,
+                    'event_category': 'contact',
+                    'event_label': 'Email Contact'
+                });
+
+                // Also track as general link
+                trackLinkClick(element, 'contact', {
+                    'contact_type': 'email',
+                    'contact_address': emailAddress
+                });
+            }
+
+            function trackDocumentClick(element) {
+                const fileType = getFileExtension(element.href);
+                const fileName = getFileName(element.href);
+
+                gtag('event', 'document_download', {
+                    'file_type': fileType,
+                    'file_name': fileName,
+                    'page_section': findParentSection(element),
+                    'language': currentLanguage,
+                    'event_category': 'download',
+                    'event_label': 'Document Access'
+                });
+
+                trackLinkClick(element, 'certificate', {
+                    'file_type': fileType,
+                    'file_name': fileName
+                });
+            }
+
+            function trackSocialClick(element) {
+                const platform = detectSocialPlatform(element.href);
+
+                gtag('event', 'social_link_click', {
+                    'social_platform': platform,
+                    'page_section': findParentSection(element),
+                    'language': currentLanguage,
+                    'event_category': 'social',
+                    'event_label': platform + '_profile'
+                });
+
+                trackLinkClick(element, 'contact', {
+                    'social_platform': platform,
+                    'contact_type': 'social'
+                });
+            }
+
+            // Setup comprehensive link tracking
+            function setupLinkTracking() {
+                const allLinks = document.querySelectorAll('a[href]');
+
+                allLinks.forEach(link => {
+                    // Skip internal links and analytics
+                    if (!isExternalLink(link)) return;
+
+                    const category = categorizeLink(link.href);
+
+                    link.addEventListener('click', function(e) {
+                        try {
+                            // Handle special cases
+                            if (this.href.startsWith('mailto:')) {
+                                trackEmailClick(this);
+                            } else if (this.href.includes('/certificate/') || 
+                                     this.href.includes('.pdf') || 
+                                     this.href.includes('.doc')) {
+                                trackDocumentClick(this);
+                            } else if (['linkedin.com', 't.me', 'github.com', 'youtube.com'].some(domain => 
+                                     this.href.includes(domain))) {
+                                trackSocialClick(this);
+                            } else {
+                                // General link tracking
+                                trackLinkClick(this, category);
+                            }
+
+                            // Special tracking for contact table links
+                            if (this.closest('.contacts-table')) {
+                                const contactType = this.querySelector('img') ? 
+                                                  this.querySelector('img').alt : 
+                                                  this.textContent.trim();
+
+                                gtag('event', 'contact_click', {
+                                    'contact_type': contactType,
+                                    'contact_url': this.href,
+                                    'language': currentLanguage,
+                                    'event_category': 'engagement',
+                                    'event_label': 'Contact Information'
+                                });
+                            }
+
+                        } catch (error) {
+                            console.log('Link tracking error:', error);
+
+                            // Fallback basic tracking
+                            gtag('event', 'link_click_error', {
+                                'link_url': this.href,
+                                'error_message': error.message,
+                                'event_category': 'error'
+                            });
+                        }
                     });
                 });
-            });
+            }
 
-            // Track external link clicks (career path links)
-            document.querySelectorAll('a[href^="http"]').forEach(function(link) {
-                if (!link.href.includes('analytics.google.com') && !link.href.includes('googletagmanager.com')) {
-                    link.addEventListener('click', function() {
-                        gtag('event', 'external_link_click', {
-                            'link_url': this.href,
-                            'link_text': this.textContent.trim(),
-                            'event_category': 'engagement',
-                            'event_label': 'External Link'
-                        });
-                    });
-                }
-            });
+            // Initialize link tracking
+            setupLinkTracking();
 
             // Track section views
             let viewedSections = [];
