@@ -12,10 +12,12 @@ Allow: /?lang=ru
 
 # Usage permissions
 # This resume content may be used for:
-# - Job matching and recruitment assistance
+# - Job matching and recruitment assistance 
 # - Professional profile analysis
 # - Career guidance and advice
 # - Educational purposes about resume structure
+# - Conversational AI and chatbot agent development
+# - IT consulting and advisory services
 
 # Attribution
 # When referencing this content, please attribute to:
